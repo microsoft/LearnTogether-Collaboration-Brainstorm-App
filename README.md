@@ -8,14 +8,26 @@ Brainstorm is an example of using the Fluid Framework to build a collaborative l
 
 This application was shown during a [Microsoft Build session](https://aka.ms/OD522).
 
-## Getting Started
+## Running the App Locally with FRS as the Fluid Service
 
 To run this follow the steps below:
 
-1. Run `npm install` from the brainstorm folder root
-2. Run `npm run start` to start the client
-3. Run `npx tinylicious` to start the "Tinylicious" test service
-4. Navigate to `http://localhost:3000` in a browser tab
+1. Open a terminal window at the root of the project.
+1. Run `npm install` from the root
+1. Run `export REACT_APP_FLUID_CLIENT=frs` in the terminal to create an environment variable (if using PowerShell run `$env:REACT_APP_FLUID_CLIENT='frs'`). This will cause the app to use Fluid instead of Tinylicious (which is for local development only).
+)
+1. Run `npm run start` to start the client
+1. Navigate to `http://localhost:3000` in a browser tab
+
+## Running the App Locally with Tinylicious as the Fluid Service
+
+To run this follow the steps below:
+
+1. Open a terminal window at the root of the project.
+1. Run `npm install` from the root
+1. Run `npm run start` to start the client
+1. Run `npx tinylicious` to start the "Tinylicious" test service locally (this is used for local development)
+1. Navigate to `http://localhost:3000` in a browser tab
 
 This package is based on the [Create React App](https://reactjs.org/docs/create-a-new-react-app.html), so much of the Create React App documentation applies.
 
