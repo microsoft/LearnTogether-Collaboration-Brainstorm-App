@@ -1,0 +1,69 @@
+{
+  "name": "@fluid-example/brainstorm",
+  "version": "0.44.0",
+  "description": "A simple brainstorming app built using Create React App plus a Fluid data model",
+  "homepage": "https://fluidframework.com",
+  "repository": "microsoft/FluidExamples",
+  "license": "MIT",
+  "author": "Microsoft and contributors",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "lib/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
+    "start:server": "tinylicious",
+    "start:frs": "cross-env REACT_APP_FLUID_CLIENT='\"frs\"' npm run start",
+    "test": "react-scripts test",
+    "test:report": "echo No test for this example"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "rules": {
+      "no-restricted-globals": [
+        "error",
+        "event",
+        "fdescribe"
+      ]
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@fluentui/react": "^8.1.1",
+    "@fluid-experimental/fluid-framework": "^0.44.0",
+    "@fluid-experimental/frs-client": "^0.44.0",
+    "@fluidframework/test-runtime-utils": "0.44.0",
+    "cross-env": "^7.0.3",
+    "react": "^16.10.2",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
+    "react-dom": "^16.10.2"
+  },
+  "devDependencies": {
+    "tinylicious": "^0.4.21640",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "22.2.3",
+    "@types/node": "^12.19.0",
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
+    "react-scripts": "4.0.2",
+    "typescript": "~4.1.3"
+  }
+}
