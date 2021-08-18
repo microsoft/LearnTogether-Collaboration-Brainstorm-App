@@ -16,7 +16,7 @@ To run this follow the steps below:
 1. Run `npm install` from the root
 1. Run `export REACT_APP_FLUID_CLIENT=frs` in the terminal to create an environment variable (if using PowerShell run `$env:REACT_APP_FLUID_CLIENT='frs'`). This will cause the app to use FRS instead of Tinylicious for the Fluid service.
 )
-1. Run `npm run start` to start the client
+1. Run `npm start` to start the client
 1. Navigate to `http://localhost:3000` in a browser tab
 
 ## Running the App Locally with Tinylicious as the Fluid Service
@@ -25,7 +25,7 @@ To run this follow the steps below:
 
 1. Open a terminal window at the root of the project.
 1. Run `npm install` from the root
-1. Run `npm run start` to start the client
+1. Run `npm start` to start the client
 1. Run `npx tinylicious` to start the "Tinylicious" test service locally (this is used for local development)
 1. Navigate to `http://localhost:3000` in a browser tab
 
