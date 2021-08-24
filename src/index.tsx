@@ -12,6 +12,7 @@ import "./view/index.css"
 import "./view/App.css";
 import { themeNameToTheme } from './view/Themes';
 import { connectionConfig, containerSchema } from "./Config";
+import { Navbar } from './Navbar';
 
 export async function start() {
     initializeIcons();
@@ -46,6 +47,7 @@ export async function start() {
     ReactDOM.render(
         <React.StrictMode>
             <ThemeProvider theme={themeNameToTheme("default")}>
+                <Navbar />
                 <BrainstormView frsResources={frsResources} />
             </ThemeProvider>
         </React.StrictMode>,

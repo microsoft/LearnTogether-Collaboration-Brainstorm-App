@@ -49,19 +49,6 @@ export function Header(props: HeaderProps) {
 
   const items: ICommandBarItemProps[] = [
     {
-      key: "title",
-      onRender: () => (
-        <Text
-          variant="xLarge"
-          styles={{
-            root: { alignSelf: "center", marginBottom: 6, marginRight: 16 },
-          }}
-        >
-          Let's Brainstorm
-        </Text>
-      ),
-    },
-    {
       key: "add",
       text: "Add note",
       onClick: onAddNote,

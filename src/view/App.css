@@ -22,3 +22,30 @@ h2 {
 #NoteSpace {
   height: 100vh
 }
+
+header {
+  background-color: #0266B7;
+  height: 40px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-template-areas: "title login";
+  align-items: center; 
+  height: 100%;
+  color: white;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.title {
+  grid-area: title;
+  font-size: 20px;
+}
+
+.login {
+  grid-area: login;
+  justify-self: end;
+}

@@ -33,6 +33,7 @@ export const BrainstormView = (props: { frsResources: FrsResources }) => {
     height: "100%",
     display: "flex",
     flexDirection: "column",
+    margin: "0px 20px 0px 20px",
   });
 
   if (authorInfo === undefined) {
