@@ -13,7 +13,13 @@ import "./view/App.css";
 import { themeNameToTheme } from './view/Themes';
 import { connectionConfig, containerSchema } from "./Config";
 import { Navbar } from './Navbar';
+import { Providers } from '@microsoft/mgt-element';
+import { Msal2Provider } from '@microsoft/mgt-msal2-provider';
 
+
+Providers.globalProvider = new Msal2Provider({
+    clientId: '26fa7fdf-ae13-4db0-84f8-8249376812dc'
+  });
 export async function start() {
     initializeIcons();
 
