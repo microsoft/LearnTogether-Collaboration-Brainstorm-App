@@ -49,3 +49,7 @@ header {
   grid-area: login;
   justify-self: end;
 }
+
+mgt-login {
+  --button-color: white;
+}
