@@ -3,7 +3,7 @@ export function Navbar() {
         <header>
           <div className="container">
             <div className="title">Let's Brainstorm</div>
-            <div className="login">Two</div>
+            <div className="login"></div>
           </div>
         </header>
       );
