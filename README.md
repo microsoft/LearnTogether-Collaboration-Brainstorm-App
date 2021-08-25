@@ -10,7 +10,7 @@ This application was shown during a [Microsoft Build session](https://aka.ms/OD5
 
 ## Running the App Locally with FRS as the Fluid Service
 
-To run this follow the steps below:
+To run this follow the steps below: 
 
 1. Open a terminal window at the root of the project.
 1. Run `npm install` from the root
