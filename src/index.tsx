@@ -6,16 +6,16 @@
 import { initializeIcons, ThemeProvider } from "@fluentui/react";
 import { FrsClient } from '@fluid-experimental/frs-client';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, { render } from 'react-dom';
 import { BrainstormView } from './view/BrainstormView';
-import "./view/index.css"
+import "./view/index.css";
 import "./view/App.css";
 import { themeNameToTheme } from './view/Themes';
 import { connectionConfig, containerSchema } from "./Config";
 import { Navbar } from './Navbar';
 import { Providers } from '@microsoft/mgt-element';
 import { Msal2Provider } from '@microsoft/mgt-msal2-provider';
-
+import useIsSignedIn from './useIsSignedIn';
 
 Providers.globalProvider = new Msal2Provider({
     clientId: '26fa7fdf-ae13-4db0-84f8-8249376812dc'
@@ -50,13 +50,27 @@ export async function start() {
         });
     }
 
+    function Main(props: any) {
+        const [isSignedIn] = useIsSignedIn();
+        return (
+            <React.StrictMode>
+                <ThemeProvider theme={themeNameToTheme("default")}>
+                    <Navbar frsResources={frsResources} />
+                    <main>
+                        {isSignedIn && 
+                            <BrainstormView frsResources={frsResources} />
+                        }
+                        {!isSignedIn &&
+                            <h2>Welcome to Brainstorm! Please sign in to get started.</h2>
+                        }      
+                    </main>              
+                </ThemeProvider>
+            </React.StrictMode>
+        )
+    }
+
     ReactDOM.render(
-        <React.StrictMode>
-            <ThemeProvider theme={themeNameToTheme("default")}>
-                <Navbar />
-                <BrainstormView frsResources={frsResources} />
-            </ThemeProvider>
-        </React.StrictMode>,
+        <Main />,
         document.getElementById('root')
     );
 }

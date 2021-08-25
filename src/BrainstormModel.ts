@@ -8,6 +8,7 @@ const c_AuthorPrefix = "author_";
 const c_votePrefix = "vote_";
 const c_TextPrefix = "text_";
 const c_ColorPrefix = "color_";
+const c_UserProfix = "user_";
 
 export type BrainstormModel = Readonly<{
   CreateNote(noteId: string, myAuthor: FrsMember): NoteData;
@@ -21,6 +22,8 @@ export type BrainstormModel = Readonly<{
   NoteIds: string[];
   setChangeListener(listener: () => void): void;
   removeChangeListener(listener: () => void): void;
+  setUserSignedIn(userId: string): void;
+  setUserSignedOut(userId: string): void;
 }>;
 
 export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
@@ -133,6 +136,20 @@ export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
 
     removeChangeListener(listener: () => void): void {
       sharedMap.off("valueChanged", listener);
+    },
+
+    setUserSignedIn(userId: string) {
+      let userIds = sharedMap.get("userIds") as string[] ?? [];
+      if (!userIds.includes(userId)) {
+        userIds.push(userId);
+      }
+      sharedMap.set("userIds", userIds);
+    },
+
+    setUserSignedOut(userId: string) {
+      let userIds = sharedMap.get("userIds") as string[] ?? [];
+      userIds = userIds.filter((uid: string) => uid !== userId);
+      sharedMap.set("userIds", userIds);
     }
   };
 }

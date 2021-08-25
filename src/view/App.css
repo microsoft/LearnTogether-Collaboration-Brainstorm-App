@@ -1,12 +1,15 @@
 .App {
   text-align: center;
 }
+
+main {
+  margin: 10px 30px 0px 20px;
+}
+
 h1 {
   color: gray;
 }
-h2 {
-  font-size: 0.8em;
-}
+
 .PropName {
   font-weight: bold;
   color: #6264a7;
@@ -25,7 +28,7 @@ h2 {
 
 header {
   background-color: #0266B7;
-  height: 40px;
+  height: 50px;
 }
 
 .container {

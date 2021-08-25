@@ -19,6 +19,7 @@ export const BrainstormView = (props: { frsResources: FrsResources }) => {
       audience.getMembers().values()
     )
   ), [setMembers, audience]);
+
   // Setup a listener to update our users when new clients join the session
   React.useEffect(() => {
     fluidContainer.on("connected", setMembersCallback);
@@ -32,8 +33,7 @@ export const BrainstormView = (props: { frsResources: FrsResources }) => {
   const wrapperClass = mergeStyles({
     height: "100%",
     display: "flex",
-    flexDirection: "column",
-    margin: "0px 20px 0px 20px",
+    flexDirection: "column"
   });
 
   if (authorInfo === undefined) {
