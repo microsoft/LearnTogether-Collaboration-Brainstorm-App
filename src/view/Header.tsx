@@ -44,7 +44,7 @@ export function Header(props: HeaderProps) {
     model.setChangeListener(signedInUserIdsChanged);
 
     return () => model.removeChangeListener(signedInUserIdsChanged);
-  }, [model, model.SignedInUserIds]);
+  }, [model]);
 
   const onAddNote = () => {
     const { scrollHeight, scrollWidth } = document.getElementById("NoteSpace")!;
