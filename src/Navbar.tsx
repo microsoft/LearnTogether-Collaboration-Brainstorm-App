@@ -21,7 +21,7 @@ export function Navbar(props: { frsResources: FrsResources }) {
             if (me && me.id) {
               userId.current = me.id;
               console.log(userId.current);
-              model.setUserSignedIn(me.id);
+              model.setSignedInUserId(me.id);
             }
           });
       };
@@ -29,7 +29,7 @@ export function Navbar(props: { frsResources: FrsResources }) {
       function userSignOut(e: Event) {
         console.log("User logged out");
         if (userId.current) {
-          model.setUserSignedOut(userId.current);
+          model.deleteSignedOutUserId(userId.current);
         }
       }
 

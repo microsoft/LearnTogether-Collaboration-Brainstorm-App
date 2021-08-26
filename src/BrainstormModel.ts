@@ -20,10 +20,11 @@ export type BrainstormModel = Readonly<{
   GetNoteLikedUsers(noteId: string): FrsMember[];
   DeleteNote(noteId: string): void;
   NoteIds: string[];
-  setChangeListener(listener: () => void): void;
-  removeChangeListener(listener: () => void): void;
-  setUserSignedIn(userId: string): void;
-  setUserSignedOut(userId: string): void;
+  setChangeListener(listener: (changed: any, local: any) => void): void;
+  removeChangeListener(listener: (changed: any, local: any) => void): void;
+  setSignedInUserId(userId: string): void;
+  deleteSignedOutUserId(userId: string): void;
+  SignedInUserIds: string[];
 }>;
 
 export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
@@ -130,26 +131,31 @@ export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
       );
     },
 
-    setChangeListener(listener: () => void): void {
+    setChangeListener(listener: (changed: any, local: any) => void): void {
       sharedMap.on("valueChanged", listener);
     },
 
-    removeChangeListener(listener: () => void): void {
+    removeChangeListener(listener: (changed: any, local: any) => void): void {
       sharedMap.off("valueChanged", listener);
     },
 
-    setUserSignedIn(userId: string) {
-      let userIds = sharedMap.get("userIds") as string[] ?? [];
+    setSignedInUserId(userId: string) {
+      let userIds =  this.SignedInUserIds ?? [];
       if (!userIds.includes(userId)) {
         userIds.push(userId);
       }
       sharedMap.set("userIds", userIds);
     },
 
-    setUserSignedOut(userId: string) {
-      let userIds = sharedMap.get("userIds") as string[] ?? [];
+    deleteSignedOutUserId(userId: string) {
+      let userIds = this.SignedInUserIds ?? [];
       userIds = userIds.filter((uid: string) => uid !== userId);
       sharedMap.set("userIds", userIds);
-    }
+    },
+
+    get SignedInUserIds(): string[] {
+      return sharedMap.get("userIds") as string[];
+    },
+
   };
 }

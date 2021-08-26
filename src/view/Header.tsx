@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Text,
   CommandBar,
@@ -27,9 +27,24 @@ export interface HeaderProps {
 }
 
 export function Header(props: HeaderProps) {
-  const colorButtonRef = React.useRef<any>();
-  const [color, setColor] = React.useState(DefaultColor);
+  const colorButtonRef = useRef<any>();
+  const [color, setColor] = useState(DefaultColor);
   const personas = React.useMemo(() => props.members.map(member => {return { personaName: member.userName}}), [props.members]);
+  const { model } = props;
+  const [signedInUserIds, setSignedInUserIds ] = useState<string[]>([]);
+
+  // This runs when via model changes whether initiated by user or from external
+  useEffect(() => {
+    function signedInUserIdsChanged(changed: any, local: any) {
+      if (changed.key === "userIds") {
+        setSignedInUserIds(model.SignedInUserIds);
+      }
+    }
+
+    model.setChangeListener(signedInUserIdsChanged);
+
+    return () => model.removeChangeListener(signedInUserIdsChanged);
+  }, [model, model.SignedInUserIds]);
 
   const onAddNote = () => {
     const { scrollHeight, scrollWidth } = document.getElementById("NoteSpace")!;
@@ -85,7 +100,9 @@ export function Header(props: HeaderProps) {
         return (
           // <Facepile styles={{ root: { alignSelf: "center" } }}
           //    personas={personas} />
-          <People user-ids="0f6bc12d-2888-4c9f-b27c-ba54cc6114e1" show-presence />
+          <div>
+              <People userIds={signedInUserIds} showPresence />
+          </div>
         );
       },
     },

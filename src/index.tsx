@@ -27,10 +27,17 @@ export async function start() {
     const getContainerId = (): { containerId: string; isNew: boolean } => {
         let isNew = false;
         if (location.hash.length === 0) {
-            isNew = true;
-            location.hash = Date.now().toString();
+            const oldContainerId = sessionStorage.getItem("containerId");
+            if (oldContainerId) {
+                location.hash = oldContainerId;
+            }
+            else {
+                isNew = true;
+                location.hash = Date.now().toString();
+            }
         }
         const containerId = location.hash.substring(1);
+        sessionStorage.setItem("containerId", containerId);
         return { containerId, isNew };
     };
 
