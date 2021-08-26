@@ -1,15 +1,17 @@
 import { mergeStyles, Spinner } from "@fluentui/react";
 import { FrsResources } from "@fluid-experimental/frs-client";
-import * as React from "react";
+import React, { useContext } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { BrainstormModel, createBrainstormModel } from "../BrainstormModel";
+import UserContext from "../userContext";
 import { Header } from "./Header";
 import { NoteSpace } from "./NoteSpace";
 
 export const BrainstormView = (props: { frsResources: FrsResources }) => {
   const { frsResources: { fluidContainer, containerServices } } = props;
   const [model] = React.useState<BrainstormModel>(createBrainstormModel(fluidContainer));
+  const user = useContext(UserContext);
 
   const audience = containerServices.audience;
   const [members, setMembers] = React.useState(Array.from(audience.getMembers().values()));
@@ -44,13 +46,13 @@ export const BrainstormView = (props: { frsResources: FrsResources }) => {
     <div className={wrapperClass}>
       <Header
         model={model}
-        author={authorInfo}
+        author={user}
         members={members}
       />
       <DndProvider backend={HTML5Backend}>
         <NoteSpace
           model={model}
-          author={authorInfo}
+          author={user}
         />
       </DndProvider>
     </div>

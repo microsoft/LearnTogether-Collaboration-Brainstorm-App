@@ -3,8 +3,9 @@ import { FrsResources } from '@fluid-experimental/frs-client';
 import { Providers } from '@microsoft/mgt-element';
 import { Login } from '@microsoft/mgt-react';
 import { BrainstormModel, createBrainstormModel } from "./BrainstormModel";
+import { User } from './Types';
 
-export function Navbar(props: { frsResources: FrsResources }) {
+export function Navbar(props: { frsResources: FrsResources, setSignedInUser: (user: User) => void}) {
     const [model] = useState<BrainstormModel>(
       createBrainstormModel(props.frsResources.fluidContainer));
     const userId = useRef<string>("");
@@ -20,7 +21,7 @@ export function Navbar(props: { frsResources: FrsResources }) {
           .then((me: any) => {
             if (me && me.id) {
               userId.current = me.id;
-              console.log(userId.current);
+              props.setSignedInUser({userName: '', userId: me.id});
               model.setSignedInUserId(me.id);
             }
           });

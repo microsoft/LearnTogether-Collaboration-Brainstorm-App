@@ -9,7 +9,8 @@ import {
   PersonaCoin,
   TooltipHost,
 } from "@fluentui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { Person } from "@microsoft/mgt-react";
 import { ColorPicker } from "./ColorPicker";
 import {
   getHeaderStyleForColor,
@@ -17,12 +18,15 @@ import {
   colorButtonStyle,
   likesButtonStyle,
   tooltipHostStyle,
+  likesButtonAuthorStyle,
 } from "./Note.style";
 import { ReactionListCallout } from "./ReactionListCallout";
 import { NoteProps } from "./Note"
+import UserContext from "../userContext";
 
 const HeaderComponent = (props: NoteProps) => {
   const colorButtonRef = React.useRef();
+  const { userName, userId } = useContext(UserContext);
 
   const headerProps = {
     className: mergeStyles(getHeaderStyleForColor(props.color)),
@@ -56,20 +60,10 @@ const HeaderComponent = (props: NoteProps) => {
       onRender: () => {
         return (
           <TooltipHost
-            styles={{ root: { alignSelf: "center", display: "block" } }}
+            styles={{ root: { alignSelf: "center", display: "block", marginLeft: "5px" } }}
             content={props.author.userName}
           >
-            <PersonaCoin
-              styles={{
-                coin: {
-                  alignSelf: "center",
-                  margin: "0px 8px",
-                  userSelect: "none",
-                },
-              }}
-              text={props.author.userName}
-              coinSize={24}
-            />
+            <Person userId={userId} />
           </TooltipHost>
         );
       },
@@ -79,12 +73,12 @@ const HeaderComponent = (props: NoteProps) => {
   const farItems: ICommandBarItemProps[] = [
     {
       key: "likes",
-      onClick: props.onLike,
+      onClick: isAuthorNote() ? () => {} : props.onLike,
       text: props.numLikesCalculated.toString(),
       iconProps: {
         iconName: props.didILikeThisCalculated ? "LikeSolid" : "Like",
       },
-      buttonStyles: likesButtonStyle,
+      buttonStyles: isAuthorNote() ? likesButtonAuthorStyle : likesButtonStyle,
       commandBarButtonAs: (props) => {
         return (
           <TooltipHost
@@ -125,6 +119,11 @@ const HeaderComponent = (props: NoteProps) => {
       buttonStyles: deleteButtonStyle,
     },
   ];
+
+  // Don't add links button for author of note
+  function isAuthorNote() {
+    return userId && props.author.userId === userId;
+  }
 
   const nonResizingGroup = (props: IResizeGroupProps) => (
     <div>

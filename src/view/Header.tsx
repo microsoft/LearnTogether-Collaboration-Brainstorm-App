@@ -10,7 +10,7 @@ import { FrsMember } from "@fluid-experimental/frs-client";
 import { BrainstormModel } from "../BrainstormModel";
 import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
-import { NoteData } from "../Types";
+import { NoteData, User } from "../Types";
 import { NOTE_SIZE } from "./Note.style";
 
 function uuidv4() {
@@ -22,8 +22,8 @@ function uuidv4() {
 }
 export interface HeaderProps {
   model: BrainstormModel;
-  author: FrsMember;
-  members: FrsMember[];
+  author: User;
+  members: User[];
 }
 
 export function Header(props: HeaderProps) {

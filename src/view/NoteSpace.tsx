@@ -1,15 +1,14 @@
 import { IStyle, mergeStyles, ThemeProvider } from "@fluentui/react";
-import { FrsMember } from "@fluid-experimental/frs-client";
 import React from "react";
 import { useDrop } from 'react-dnd';
-import { NoteData, Position } from "../Types";
+import { NoteData, Position, User } from "../Types";
 import { Note } from "./Note";
 import { BrainstormModel } from "../BrainstormModel";
 import { lightTheme } from "./Themes";
 
 export type NoteSpaceProps = Readonly<{
   model: BrainstormModel;
-  author: FrsMember;
+  author: User;
 }>;
 
 export function NoteSpace(props: NoteSpaceProps) {
@@ -91,6 +90,7 @@ export function NoteSpace(props: NoteSpaceProps) {
               {...note}
               id={note.id}
               key={note.id}
+              author={note.author}
               text={note.text}
               setPosition={setPosition}
               onLike={onLike}

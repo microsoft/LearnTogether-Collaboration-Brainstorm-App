@@ -1,22 +1,22 @@
 import {
   mergeStyles,
 } from "@fluentui/react";
-import { FrsMember } from "@fluid-experimental/frs-client";
 import React from "react";
 import { useDrag } from "react-dnd";
 import { DefaultColor } from "./Color";
 import {
   getRootStyleForColor
 } from "./Note.style";
-import { NoteData, Position } from "../Types";
+import { NoteData, Position, User } from "../Types";
 import { NoteHeader } from "./NoteHeader";
 import { NoteBody } from "./NoteBody";
 
 export type NoteProps = Readonly<{
   id: string;
+  author: User;
   setPosition: (position: Position) => void;
   onLike: () => void;
-  getLikedUsers: () => FrsMember[];
+  getLikedUsers: () => User[];
   onDelete: () => void;
   onColorChange: (color: string) => void;
   setText: (text: string) => void;

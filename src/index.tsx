@@ -5,7 +5,7 @@
 
 import { initializeIcons, ThemeProvider } from "@fluentui/react";
 import { FrsClient } from '@fluid-experimental/frs-client';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM, { render } from 'react-dom';
 import { BrainstormView } from './view/BrainstormView';
 import "./view/index.css";
@@ -16,6 +16,8 @@ import { Navbar } from './Navbar';
 import { Providers } from '@microsoft/mgt-element';
 import { Msal2Provider } from '@microsoft/mgt-msal2-provider';
 import useIsSignedIn from './useIsSignedIn';
+import UserContext from "./userContext";
+import { User } from "./Types";
 
 Providers.globalProvider = new Msal2Provider({
     clientId: '26fa7fdf-ae13-4db0-84f8-8249376812dc'
@@ -60,18 +62,27 @@ export async function start() {
 
     function Main(props: any) {
         const [isSignedIn] = useIsSignedIn();
+        const [user, setUser] = useState<User>({userName: '', userId: ''});
+
+        function setSignedInUser(user: User) {
+            setUser(user);
+            console.log(user);
+        }
+
         return (
             <React.StrictMode>
                 <ThemeProvider theme={themeNameToTheme("default")}>
-                    <Navbar frsResources={frsResources} />
-                    <main>
-                        {isSignedIn &&
-                            <BrainstormView frsResources={frsResources} />
-                        }
-                        {!isSignedIn &&
-                            <h2>Welcome to Brainstorm! Please sign in to get started.</h2>
-                        }
-                    </main>
+                    <UserContext.Provider value={user}>
+                        <Navbar frsResources={frsResources} setSignedInUser={setSignedInUser} />
+                        <main>
+                            {isSignedIn &&
+                                <BrainstormView frsResources={frsResources} />
+                            }
+                            {!isSignedIn &&
+                                <h2>Welcome to Brainstorm! Please sign in to get started.</h2>
+                            }
+                        </main>
+                    </UserContext.Provider>
                 </ThemeProvider>
             </React.StrictMode>
         )

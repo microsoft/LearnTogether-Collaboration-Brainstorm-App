@@ -41,6 +41,12 @@ export const likesButtonStyle: IButtonStyles = {
   iconHovered: { fontSize: "18px" }
 };
 
+export const likesButtonAuthorStyle: IButtonStyles = {
+  root: { backgroundColor: "transparent" }, 
+  rootHovered: { backgroundColor: "transparent", fontSize: "14px" },
+  rootPressed: { backgroundColor: "transparent" },  
+};
+
 export function getRootStyleForColor(color: ColorId): IStyle {
   return {
     background: ColorOptions[color].light,

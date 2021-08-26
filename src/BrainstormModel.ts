@@ -1,6 +1,6 @@
 import { FluidContainer, ISharedMap, SharedMap } from "@fluid-experimental/fluid-framework";
 import { FrsMember } from "@fluid-experimental/frs-client";
-import { NoteData, Position } from "./Types";
+import { NoteData, Position, User } from "./Types";
 
 const c_NoteIdPrefix = "noteId_";
 const c_PositionPrefix = "position_";
@@ -11,13 +11,13 @@ const c_ColorPrefix = "color_";
 const c_UserProfix = "user_";
 
 export type BrainstormModel = Readonly<{
-  CreateNote(noteId: string, myAuthor: FrsMember): NoteData;
+  CreateNote(noteId: string, myAuthor: User): NoteData;
   MoveNote(noteId: string, newPos: Position): void;
   SetNote(noteId: string, newCardData: NoteData): void;
   SetNoteText(noteId: string, noteText: string): void;
   SetNoteColor(noteId: string, noteColor: string): void;
-  LikeNote(noteId: string, author: FrsMember): void;
-  GetNoteLikedUsers(noteId: string): FrsMember[];
+  LikeNote(noteId: string, author: User): void;
+  GetNoteLikedUsers(noteId: string): User[];
   DeleteNote(noteId: string): void;
   NoteIds: string[];
   setChangeListener(listener: (changed: any, local: any) => void): void;

@@ -1,11 +1,12 @@
 import { Icon, Label, Stack } from "@fluentui/react";
 import { FrsMember } from "@fluid-experimental/frs-client";
 import React from "react";
+import { User } from "../Types";
 import { PersonaList } from "./PersonaList";
 
 export type ReactionListCalloutProps = {
   label: string;
-  usersToDisplay: FrsMember[];
+  usersToDisplay: User[];
   reactionIconName?: string;
 };
 
