@@ -1,11 +1,12 @@
+import React from "react";
 import {
   Text,
   CommandBar,
   ICommandBarItemProps,
   Facepile,
 } from "@fluentui/react";
+import { People } from '@microsoft/mgt-react';
 import { FrsMember } from "@fluid-experimental/frs-client";
-import React from "react";
 import { BrainstormModel } from "../BrainstormModel";
 import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
@@ -80,10 +81,13 @@ export function Header(props: HeaderProps) {
   const farItems: ICommandBarItemProps[] = [
     {
       key: "presence",
-      onRender: () => <Facepile
-      styles={{ root: { alignSelf: "center" } }}
-      personas={personas}
-    />,
+      onRender: () => {
+        return (
+          // <Facepile styles={{ root: { alignSelf: "center" } }}
+          //    personas={personas} />
+          <People user-ids="0f6bc12d-2888-4c9f-b27c-ba54cc6114e1" show-presence />
+        );
+      },
     },
   ];
   return (

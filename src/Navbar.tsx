@@ -20,6 +20,7 @@ export function Navbar(props: { frsResources: FrsResources }) {
           .then((me: any) => {
             if (me && me.id) {
               userId.current = me.id;
+              console.log(userId.current);
               model.setUserSignedIn(me.id);
             }
           });
