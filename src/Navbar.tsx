@@ -34,7 +34,7 @@ export function Navbar(props: { frsResources: FrsResources }) {
       }
 
       login?.addEventListener("loginCompleted", userSignIn);
-      login?.addEventListener("logoutCompleted", userSignOut);
+      login?.addEventListener("logoutInitiated", userSignOut);
 
       return () => {
         login?.removeEventListener("loginCompleted", userSignIn);
