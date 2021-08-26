@@ -19,7 +19,8 @@ import useIsSignedIn from './useIsSignedIn';
 
 Providers.globalProvider = new Msal2Provider({
     clientId: '26fa7fdf-ae13-4db0-84f8-8249376812dc'
-  });
+});
+
 export async function start() {
     initializeIcons();
 
