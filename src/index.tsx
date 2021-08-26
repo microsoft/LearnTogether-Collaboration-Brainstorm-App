@@ -58,13 +58,13 @@ export async function start() {
                 <ThemeProvider theme={themeNameToTheme("default")}>
                     <Navbar frsResources={frsResources} />
                     <main>
-                        {isSignedIn && 
+                        {isSignedIn &&
                             <BrainstormView frsResources={frsResources} />
                         }
                         {!isSignedIn &&
                             <h2>Welcome to Brainstorm! Please sign in to get started.</h2>
-                        }      
-                    </main>              
+                        }
+                    </main>
                 </ThemeProvider>
             </React.StrictMode>
         )
