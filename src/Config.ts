@@ -1,14 +1,6 @@
 import { AzureConnectionConfig, InsecureTokenProvider } from "@fluidframework/azure-client";
 import { SharedMap } from "fluid-framework";
-import { uuidv4, generateName } from './utils';
-
-function generateUser() {
-    const randomUser = {
-        id: uuidv4(),
-        name: generateName()
-    };
-    return randomUser;
-}
+import { generateUser } from './utils';
 
 export const useAzureFrs = process.env.REACT_APP_FLUID_CLIENT === "frs";
 export const user = generateUser();
