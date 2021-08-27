@@ -10,7 +10,7 @@ import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
 import { NoteData } from "../Types";
 import { NOTE_SIZE } from "./Note.style";
-import { uuidv4 } from '../utils';
+import { uuidv4 } from '../Utils';
 
 export interface HeaderProps {
   model: BrainstormModel;

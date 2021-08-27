@@ -14,6 +14,7 @@ import { NoteBody } from "./NoteBody";
 
 export type NoteProps = Readonly<{
   id: string;
+  user: AzureMember;
   setPosition: (position: Position) => void;
   onLike: () => void;
   getLikedUsers: () => AzureMember[];

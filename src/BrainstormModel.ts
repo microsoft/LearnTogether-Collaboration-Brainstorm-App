@@ -1,6 +1,6 @@
 import { FluidContainer, ISharedMap, SharedMap } from "fluid-framework";
 import { AzureMember } from "@fluidframework/azure-client";
-import { NoteData, Position } from "./Types";
+import { LikedNote, NoteData, Position } from "./Types";
 
 const c_NoteIdPrefix = "noteId_";
 const c_PositionPrefix = "position_";
@@ -19,6 +19,7 @@ export type BrainstormModel = Readonly<{
   GetNoteLikedUsers(noteId: string): AzureMember[];
   DeleteNote(noteId: string): void;
   NoteIds: string[];
+  LikedNotes: LikedNote[];
   setChangeListener(listener: () => void): void;
   removeChangeListener(listener: () => void): void;
 }>;
@@ -49,6 +50,12 @@ export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
     sharedMap.set(c_ColorPrefix + noteId, noteColor);
   };
 
+  const numLikesCalculated = (noteId: string) => {
+    return Array.from(sharedMap
+      .keys())
+      .filter((key: string) => key.includes(c_votePrefix + noteId))
+      .filter((key: string) => sharedMap.get(key) !== undefined).length;
+  };
 
   return {
     CreateNote(noteId: string, myAuthor: AzureMember): NoteData {
@@ -57,10 +64,7 @@ export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
         text: sharedMap.get(c_TextPrefix + noteId),
         position: sharedMap.get(c_PositionPrefix + noteId)!,
         author: sharedMap.get(c_AuthorPrefix + noteId)!,
-        numLikesCalculated: Array.from(sharedMap
-          .keys())
-          .filter((key: string) => key.includes(c_votePrefix + noteId))
-          .filter((key: string) => sharedMap.get(key) !== undefined).length,
+        numLikesCalculated: numLikesCalculated(noteId),
         didILikeThisCalculated:
           Array.from(sharedMap
             .keys())
@@ -125,6 +129,38 @@ export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
           // Remove notes which are incomplete or deleted
           .filter((noteId) => IsCompleteNote(noteId) && !IsDeletedNote(noteId))
       );
+    },
+
+    get LikedNotes(): LikedNote[] {
+      return (
+        Array.from(sharedMap
+          .keys())
+          // Only look at keys which represent if a note exists or not
+          .filter((key: String) => key.includes(c_NoteIdPrefix))
+          // Modify the note ids to not expose the prefix
+          .map((noteIdWithPrefix) =>
+            noteIdWithPrefix.substring(c_NoteIdPrefix.length)
+          )
+          // Remove notes which are incomplete or deleted
+          .filter((noteId) => 
+            !IsDeletedNote(noteId) && numLikesCalculated(noteId) > 0 && 
+              sharedMap.get(c_TextPrefix + noteId)
+          )
+          .map((noteId) => {
+            const text = sharedMap.get(c_TextPrefix + noteId);
+            const color = sharedMap.get(c_ColorPrefix + noteId);
+            const author = sharedMap.get(c_AuthorPrefix + noteId);
+              return {
+                text,
+                color,
+                author,
+                numLikesCalculated: numLikesCalculated(noteId)
+              };
+          })
+          .sort((a: LikedNote, b: LikedNote) => {
+            return b.numLikesCalculated - a.numLikesCalculated;
+          })
+        );
     },
 
     setChangeListener(listener: () => void): void {

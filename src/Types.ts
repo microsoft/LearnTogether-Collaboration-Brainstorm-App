@@ -19,3 +19,10 @@ export type ColorId =
   | "Pink"
   | "Purple"
   | "Orange";
+
+export type LikedNote = {
+  text: string, 
+  color: string, 
+  author: AzureMember,
+  numLikesCalculated: number
+};

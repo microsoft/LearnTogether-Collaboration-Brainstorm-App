@@ -17,12 +17,14 @@ import {
   colorButtonStyle,
   likesButtonStyle,
   tooltipHostStyle,
+  likesButtonAuthorStyle,
 } from "./Note.style";
 import { ReactionListCallout } from "./ReactionListCallout";
 import { NoteProps } from "./Note"
 
 const HeaderComponent = (props: NoteProps) => {
   const colorButtonRef = React.useRef();
+  const { user } = props;
 
   const headerProps = {
     className: mergeStyles(getHeaderStyleForColor(props.color)),
@@ -84,7 +86,7 @@ const HeaderComponent = (props: NoteProps) => {
       iconProps: {
         iconName: props.didILikeThisCalculated ? "LikeSolid" : "Like",
       },
-      buttonStyles: likesButtonStyle,
+      buttonStyles: isAuthorNote() ? likesButtonAuthorStyle : likesButtonStyle,
       commandBarButtonAs: (props) => {
         return (
           <TooltipHost
@@ -123,8 +125,12 @@ const HeaderComponent = (props: NoteProps) => {
       title: "Delete Note",
       onClick: props.onDelete,
       buttonStyles: deleteButtonStyle,
-    },
+    }
   ];
+
+  function isAuthorNote() {
+    return user.userId && props.author.userId === user.userId;
+  }
 
   const nonResizingGroup = (props: IResizeGroupProps) => (
     <div>

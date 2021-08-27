@@ -1,3 +1,36 @@
+import { AzureClient, AzureResources } from "@fluidframework/azure-client";
+import { connectionConfig, containerSchema } from "./Config";
+
+export async function getFluidContainer() : 
+ Promise<{ containerId: string, azureResources: AzureResources}> {
+  let containerId = '';
+  // Check if there's a previous containerId (user may have simply logged out)
+  const prevContainerId = sessionStorage.getItem("containerId");
+  if (location.hash.length === 0) {
+      if (prevContainerId) {
+          location.hash = prevContainerId;
+          containerId = prevContainerId;
+      }
+  }
+  else {
+      containerId = location.hash.substring(1);        
+  }
+
+  const client = new AzureClient(connectionConfig);
+  let azureResources: AzureResources;
+  if (containerId) {
+      azureResources = await client.getContainer(containerId, containerSchema);
+  }
+  else {
+      azureResources = await client.createContainer(containerSchema);
+      // Temporary until attach() is available (per Fluid engineering)
+      containerId = azureResources.fluidContainer.id;
+      location.hash = containerId;
+  }
+  sessionStorage.setItem("containerId", containerId);
+  return {containerId, azureResources}; 
+}
+
 export function generateUser() {
   const randomUser = {
       id: uuidv4(),

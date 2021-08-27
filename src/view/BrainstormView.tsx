@@ -5,6 +5,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { BrainstormModel, createBrainstormModel } from "../BrainstormModel";
 import { Header } from "./Header";
+import { ItemsList } from "./ItemsList";
 import { NoteSpace } from "./NoteSpace";
 
 export const BrainstormView = (props: { frsResources: AzureResources }) => {
@@ -47,12 +48,17 @@ export const BrainstormView = (props: { frsResources: AzureResources }) => {
         author={authorInfo}
         members={members}
       />
-      <DndProvider backend={HTML5Backend}>
-        <NoteSpace
-          model={model}
-          author={authorInfo}
-        />
-      </DndProvider>
+        <div className="items-list">
+          <ItemsList model={model} />
+        </div>
+        <div>
+          <DndProvider backend={HTML5Backend}>
+            <NoteSpace
+              model={model}
+              author={authorInfo}
+            />
+          </DndProvider>
+        </div>
     </div>
   );
 };

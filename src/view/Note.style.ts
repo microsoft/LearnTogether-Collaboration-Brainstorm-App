@@ -3,8 +3,8 @@ import { ColorOptions } from "./Color";
 import { ColorId } from "../Types";
 
 export const NOTE_SIZE = {
-  width: 300,
-  height: 100
+  width: 250,
+  height: 75
 }
 
 export const tooltipHostStyle: Partial<ITooltipHostStyles> = {
@@ -38,7 +38,13 @@ export const likesButtonStyle: IButtonStyles = {
   root: { backgroundColor: "transparent" }, 
   rootHovered: { backgroundColor: "transparent", fontSize: "18px" }, 
   rootPressed: { backgroundColor: "transparent" }, 
-  iconHovered: { fontSize: "18px" }
+  iconHovered: { fontSize: "18px" },
+};
+
+export const likesButtonAuthorStyle: IButtonStyles = {
+  root: { backgroundColor: "transparent" }, 
+  rootHovered: { backgroundColor: "transparent", fontSize: "14px" },
+  rootPressed: { backgroundColor: "transparent" },  
 };
 
 export function getRootStyleForColor(color: ColorId): IStyle {
@@ -49,7 +55,7 @@ export function getRootStyleForColor(color: ColorId): IStyle {
     boxShadow:
       "rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0.3px 0.9px 0px",
     width: NOTE_SIZE.width,
-    minHeight: NOTE_SIZE.height
+    minHeight: NOTE_SIZE.height,
   };
 }
 
