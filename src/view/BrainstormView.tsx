@@ -1,5 +1,5 @@
 import { mergeStyles, Spinner } from "@fluentui/react";
-import { FrsResources } from "@fluid-experimental/frs-client";
+import { AzureResources } from "@fluidframework/azure-client";
 import React, { useContext } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -8,7 +8,7 @@ import UserContext from "../userContext";
 import { Header } from "./Header";
 import { NoteSpace } from "./NoteSpace";
 
-export const BrainstormView = (props: { frsResources: FrsResources }) => {
+export const BrainstormView = (props: { frsResources: AzureResources }) => {
   const { frsResources: { fluidContainer, containerServices } } = props;
   const [model] = React.useState<BrainstormModel>(createBrainstormModel(fluidContainer));
   const user = useContext(UserContext);

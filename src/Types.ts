@@ -1,5 +1,3 @@
-import { FrsMember } from "@fluid-experimental/frs-client";
-
 export type Position = Readonly<{ x: number; y: number }>;
 
 export type User = { userName: string, userId: string };

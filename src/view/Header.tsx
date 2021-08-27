@@ -6,7 +6,6 @@ import {
   Facepile,
 } from "@fluentui/react";
 import { People } from '@microsoft/mgt-react';
-import { FrsMember } from "@fluid-experimental/frs-client";
 import { BrainstormModel } from "../BrainstormModel";
 import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";

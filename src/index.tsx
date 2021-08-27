@@ -4,9 +4,9 @@
  */
 
 import { initializeIcons, ThemeProvider } from "@fluentui/react";
-import { FrsClient } from '@fluid-experimental/frs-client';
+import { AzureClient, AzureResources } from '@fluidframework/azure-client';
 import React, { useState } from 'react';
-import ReactDOM, { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { BrainstormView } from './view/BrainstormView';
 import "./view/index.css";
 import "./view/App.css";
@@ -26,35 +26,41 @@ Providers.globalProvider = new Msal2Provider({
 export async function start() {
     initializeIcons();
 
-    const getContainerId = (): { containerId: string; isNew: boolean } => {
-        let isNew = false;
+    async function createOrGetContainer() : 
+      Promise<{ containerId: string, azureResources: AzureResources}> {
+        let containerId = '';
+        // Check if there's a previous containerId (user may have simply logged out)
+        const prevContainerId = sessionStorage.getItem("containerId");
         if (location.hash.length === 0) {
-            const oldContainerId = sessionStorage.getItem("containerId");
-            if (oldContainerId) {
-                location.hash = oldContainerId;
-            }
-            else {
-                isNew = true;
-                location.hash = Date.now().toString();
+            if (prevContainerId) {
+                location.hash = prevContainerId;
+                containerId = prevContainerId;
             }
         }
-        const containerId = location.hash.substring(1);
+        else {
+            containerId = location.hash.substring(1);        
+        }
+
+        const client = new AzureClient(connectionConfig);
+        let azureResources: AzureResources;
+        if (containerId) {
+            azureResources = await client.getContainer(containerId, containerSchema);
+        }
+        else {
+            azureResources = await client.createContainer(containerSchema);
+            // Temporary until attach() is available (per Fluid engineering)
+            containerId = azureResources.fluidContainer.id;
+            location.hash = containerId;
+        }
         sessionStorage.setItem("containerId", containerId);
-        return { containerId, isNew };
-    };
+        return {containerId, azureResources}; 
+    }
 
-    const { containerId, isNew } = getContainerId();
+    let {azureResources} = await createOrGetContainer();
 
-    const client = new FrsClient(connectionConfig);
-
-    const frsResources = isNew
-        ? await client.createContainer({ id: containerId }, containerSchema)
-        : await client.getContainer({ id: containerId }, containerSchema);
-
-
-    if (!frsResources.fluidContainer.connected) {
+    if (!azureResources.fluidContainer.connected) {
         await new Promise<void>((resolve) => {
-            frsResources.fluidContainer.once("connected", () => {
+            azureResources.fluidContainer.once("connected", () => {
                 resolve();
             });
         });
@@ -62,21 +68,20 @@ export async function start() {
 
     function Main(props: any) {
         const [isSignedIn] = useIsSignedIn();
-        const [user, setUser] = useState<User>({userName: '', userId: ''});
+        const [user, setUser] = useState<User>({ userName: '', userId: '' });
 
         function setSignedInUser(user: User) {
             setUser(user);
-            console.log(user);
         }
 
         return (
             <React.StrictMode>
                 <ThemeProvider theme={themeNameToTheme("default")}>
                     <UserContext.Provider value={user}>
-                        <Navbar frsResources={frsResources} setSignedInUser={setSignedInUser} />
+                        <Navbar frsResources={azureResources} setSignedInUser={setSignedInUser} />
                         <main>
                             {isSignedIn &&
-                                <BrainstormView frsResources={frsResources} />
+                                <BrainstormView frsResources={azureResources} />
                             }
                             {!isSignedIn &&
                                 <h2>Welcome to Brainstorm! Please sign in to get started.</h2>
@@ -86,7 +91,7 @@ export async function start() {
                 </ThemeProvider>
             </React.StrictMode>
         )
-    }
+    }   
 
     ReactDOM.render(
         <Main />,

@@ -1,11 +1,8 @@
-import { FrsConnectionConfig, InsecureTokenProvider } from "@fluid-experimental/frs-client";
-import { SharedMap } from "@fluid-experimental/fluid-framework";
-import { generateUser } from "@fluidframework/server-services-client";
+import { AzureConnectionConfig, InsecureTokenProvider } from "@fluidframework/azure-client";
+import { SharedMap } from "fluid-framework";
 
-export const useFrs = process.env.REACT_APP_FLUID_CLIENT === "frs";
-
-export const user = generateUser();
-
+export const useAzureFrs = process.env.REACT_APP_FLUID_CLIENT === "frs";
+export const user = { id: "123", name: "Test User" };
 export const containerSchema = {
     name: "brainstorm",
     initialObjects: {
@@ -13,7 +10,7 @@ export const containerSchema = {
     },
 }
 
-export const connectionConfig: FrsConnectionConfig = useFrs ? {
+export const connectionConfig: AzureConnectionConfig = useAzureFrs ? {
     tenantId: 'm365cda',
     tokenProvider: new InsecureTokenProvider('c979c09e55407ceb62840c7ddfcfb0c1', user),
     orderer: 'https://alfred.eus-1.canary.frs.azure.com',
