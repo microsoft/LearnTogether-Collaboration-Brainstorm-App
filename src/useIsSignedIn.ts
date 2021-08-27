@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Providers, ProviderState } from '@microsoft/mgt-element';
 
 export default function useIsSignedIn(): [boolean] {

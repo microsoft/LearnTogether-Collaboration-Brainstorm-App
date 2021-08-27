@@ -6,10 +6,9 @@ import {
   IResizeGroupProps,
   ITooltipProps,
   mergeStyles,
-  PersonaCoin,
   TooltipHost,
 } from "@fluentui/react";
-import React, { useContext } from "react";
+import { useContext, useRef, memo } from "react";
 import { Person } from "@microsoft/mgt-react";
 import { ColorPicker } from "./ColorPicker";
 import {
@@ -25,8 +24,8 @@ import { NoteProps } from "./Note"
 import UserContext from "../userContext";
 
 const HeaderComponent = (props: NoteProps) => {
-  const colorButtonRef = React.useRef();
-  const { userName, userId } = useContext(UserContext);
+  const colorButtonRef = useRef();
+  const { userId } = useContext(UserContext);
 
   const headerProps = {
     className: mergeStyles(getHeaderStyleForColor(props.color)),
@@ -147,7 +146,7 @@ const HeaderComponent = (props: NoteProps) => {
   )
 }
 
-export const NoteHeader = React.memo(HeaderComponent, (prevProps, nextProps) => {
+export const NoteHeader = memo(HeaderComponent, (prevProps, nextProps) => {
   return prevProps.color === nextProps.color
     && prevProps.numLikesCalculated === nextProps.numLikesCalculated
     && prevProps.didILikeThisCalculated === nextProps.didILikeThisCalculated

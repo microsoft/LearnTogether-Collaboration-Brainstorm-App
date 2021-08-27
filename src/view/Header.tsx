@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import {
-  Text,
   CommandBar,
   ICommandBarItemProps,
-  Facepile,
 } from "@fluentui/react";
 import { People } from '@microsoft/mgt-react';
 import { BrainstormModel } from "../BrainstormModel";
@@ -28,7 +26,7 @@ export interface HeaderProps {
 export function Header(props: HeaderProps) {
   const colorButtonRef = useRef<any>();
   const [color, setColor] = useState(DefaultColor);
-  const personas = React.useMemo(() => props.members.map(member => {return { personaName: member.userName}}), [props.members]);
+  // const personas = React.useMemo(() => props.members.map(member => {return { personaName: member.userName}}), [props.members]);
   const { model } = props;
   const [signedInUserIds, setSignedInUserIds ] = useState<string[]>([]);
 

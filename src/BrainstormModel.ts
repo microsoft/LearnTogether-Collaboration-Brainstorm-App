@@ -7,7 +7,6 @@ const c_AuthorPrefix = "author_";
 const c_votePrefix = "vote_";
 const c_TextPrefix = "text_";
 const c_ColorPrefix = "color_";
-const c_UserProfix = "user_";
 
 export type BrainstormModel = Readonly<{
   CreateNote(noteId: string, myAuthor: User): NoteData;

@@ -42,7 +42,7 @@ export function Navbar(props: { frsResources: AzureResources, setSignedInUser: (
         login?.removeEventListener("logoutCompleted", userSignOut);
       };
       
-    }, []);
+    }, [model, props]);
 
     return (
         <header>
