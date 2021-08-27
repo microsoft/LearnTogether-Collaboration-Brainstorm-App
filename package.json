@@ -44,15 +44,18 @@
     ]
   },
   "dependencies": {
-    "@fluentui/react": "^8.1.1",
-    "@fluid-experimental/fluid-framework": "^0.44.0",
-    "@fluid-experimental/frs-client": "^0.44.0",
-    "@fluidframework/test-runtime-utils": "0.44.0",
+    "@fluentui/react": "^8.29.2",
+    "fluid-framework": "^0.46.0",
+    "@fluidframework/azure-client": "^0.46.0",
+    "@fluidframework/test-runtime-utils": "0.46.0",
+    "@microsoft/mgt-element": "^2.2.1",
+    "@microsoft/mgt-msal2-provider": "^2.2.1",
+    "@microsoft/mgt-react": "^2.2.1",
     "cross-env": "^7.0.3",
-    "react": "^16.10.2",
-    "react-dnd": "^14.0.2",
-    "react-dnd-html5-backend": "^14.0.0",
-    "react-dom": "^16.10.2"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dnd": "^14.0.3",
+    "react-dnd-html5-backend": "^14.0.1"
   },
   "devDependencies": {
     "tinylicious": "^0.4.21640",

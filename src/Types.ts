@@ -1,11 +1,11 @@
-import { FrsMember } from "@fluid-experimental/frs-client";
+import { AzureMember } from "@fluidframework/azure-client";
 
 export type Position = Readonly<{ x: number; y: number }>;
 
 export type NoteData = Readonly<{
   id: any;
   text?: string;
-  author: FrsMember;
+  author: AzureMember;
   position: Position;
   numLikesCalculated: number;
   didILikeThisCalculated: boolean;

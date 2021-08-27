@@ -1,26 +1,26 @@
 import { mergeStyles, Spinner } from "@fluentui/react";
-import { FrsResources } from "@fluid-experimental/frs-client";
-import * as React from "react";
+import { AzureResources } from "@fluidframework/azure-client";
+import { useState, useCallback, useEffect } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { BrainstormModel, createBrainstormModel } from "../BrainstormModel";
 import { Header } from "./Header";
 import { NoteSpace } from "./NoteSpace";
 
-export const BrainstormView = (props: { frsResources: FrsResources }) => {
+export const BrainstormView = (props: { frsResources: AzureResources }) => {
   const { frsResources: { fluidContainer, containerServices } } = props;
-  const [model] = React.useState<BrainstormModel>(createBrainstormModel(fluidContainer));
+  const [model] = useState<BrainstormModel>(createBrainstormModel(fluidContainer));
 
   const audience = containerServices.audience;
-  const [members, setMembers] = React.useState(Array.from(audience.getMembers().values()));
+  const [members, setMembers] = useState(Array.from(audience.getMembers().values()));
   const authorInfo = audience.getMyself();
-  const setMembersCallback = React.useCallback(() => setMembers(
+  const setMembersCallback = useCallback(() => setMembers(
     Array.from(
       audience.getMembers().values()
     )
   ), [setMembers, audience]);
   // Setup a listener to update our users when new clients join the session
-  React.useEffect(() => {
+  useEffect(() => {
     fluidContainer.on("connected", setMembersCallback);
     audience.on("membersChanged", setMembersCallback);
     return () => {
