@@ -1,6 +1,6 @@
 import { mergeStyles, Spinner } from "@fluentui/react";
 import { AzureResources } from "@fluidframework/azure-client";
-import React, { useContext } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { BrainstormModel, createBrainstormModel } from "../BrainstormModel";
@@ -10,20 +10,20 @@ import { NoteSpace } from "./NoteSpace";
 
 export const BrainstormView = (props: { frsResources: AzureResources }) => {
   const { frsResources: { fluidContainer, containerServices } } = props;
-  const [model] = React.useState<BrainstormModel>(createBrainstormModel(fluidContainer));
+  const [model] = useState<BrainstormModel>(createBrainstormModel(fluidContainer));
   const user = useContext(UserContext);
 
   const audience = containerServices.audience;
-  const [members, setMembers] = React.useState(Array.from(audience.getMembers().values()));
+  const [members, setMembers] = useState(Array.from(audience.getMembers().values()));
   const authorInfo = audience.getMyself();
-  const setMembersCallback = React.useCallback(() => setMembers(
+  const setMembersCallback = useCallback(() => setMembers(
     Array.from(
       audience.getMembers().values()
     )
   ), [setMembers, audience]);
 
   // Setup a listener to update our users when new clients join the session
-  React.useEffect(() => {
+  useEffect(() => {
     fluidContainer.on("connected", setMembersCallback);
     audience.on("membersChanged", setMembersCallback);
     return () => {
