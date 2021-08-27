@@ -6,7 +6,6 @@ function generateUser() {
         id: createUUID(),
         name: generateName()
     };
-
     return randomUser;
 }
 
@@ -41,7 +40,7 @@ function createUUID() {
 
 
 
- 
+
 
 // https://gist.github.com/tkon99/4c98af713acc73bed74c
 
