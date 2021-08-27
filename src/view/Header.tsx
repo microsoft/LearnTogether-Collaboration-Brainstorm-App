@@ -1,5 +1,4 @@
 import {
-  Text,
   CommandBar,
   ICommandBarItemProps,
   Facepile,
