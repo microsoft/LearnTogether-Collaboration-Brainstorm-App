@@ -90,7 +90,7 @@ export function NoteSpace(props: NoteSpaceProps) {
               {...note}
               id={note.id}
               key={note.id}
-              author={note.author}
+              user={props.author}
               text={note.text}
               setPosition={setPosition}
               onLike={onLike}

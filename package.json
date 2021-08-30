@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@fluentui/react": "^8.29.2",
+    "@fluentui/react-icons-mdl2": "^1.2.1",
     "fluid-framework": "^0.46.0",
     "@fluidframework/azure-client": "^0.46.0",
     "@fluidframework/test-runtime-utils": "0.46.0",

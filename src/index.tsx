@@ -4,20 +4,19 @@
  */
 
 import { initializeIcons, ThemeProvider } from "@fluentui/react";
-import { AzureClient, AzureResources } from '@fluidframework/azure-client';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrainstormView } from './view/BrainstormView';
 import "./view/index.css";
 import "./view/App.css";
 import { themeNameToTheme } from './view/Themes';
-import { connectionConfig, containerSchema } from "./Config";
 import { Navbar } from './Navbar';
 import { Providers } from '@microsoft/mgt-element';
 import { Msal2Provider } from '@microsoft/mgt-msal2-provider';
 import useIsSignedIn from './useIsSignedIn';
 import UserContext from "./userContext";
 import { User } from "./Types";
+import { getFluidContainer } from "./Utils";
 
 Providers.globalProvider = new Msal2Provider({
     clientId: '26fa7fdf-ae13-4db0-84f8-8249376812dc'
@@ -26,37 +25,7 @@ Providers.globalProvider = new Msal2Provider({
 export async function start() {
     initializeIcons();
 
-    async function createOrGetContainer() : 
-      Promise<{ containerId: string, azureResources: AzureResources}> {
-        let containerId = '';
-        // Check if there's a previous containerId (user may have simply logged out)
-        const prevContainerId = sessionStorage.getItem("containerId");
-        if (location.hash.length === 0) {
-            if (prevContainerId) {
-                location.hash = prevContainerId;
-                containerId = prevContainerId;
-            }
-        }
-        else {
-            containerId = location.hash.substring(1);        
-        }
-
-        const client = new AzureClient(connectionConfig);
-        let azureResources: AzureResources;
-        if (containerId) {
-            azureResources = await client.getContainer(containerId, containerSchema);
-        }
-        else {
-            azureResources = await client.createContainer(containerSchema);
-            // Temporary until attach() is available (per Fluid engineering)
-            containerId = azureResources.fluidContainer.id;
-            location.hash = containerId;
-        }
-        sessionStorage.setItem("containerId", containerId);
-        return {containerId, azureResources}; 
-    }
-
-    let {azureResources} = await createOrGetContainer();
+    let {azureResources} = await getFluidContainer();
 
     if (!azureResources.fluidContainer.connected) {
         await new Promise<void>((resolve) => {

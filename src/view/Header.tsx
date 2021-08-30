@@ -9,18 +9,16 @@ import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
 import { NoteData, User } from "../Types";
 import { NOTE_SIZE } from "./Note.style";
-import { uuidv4 } from "../utils";
+import { uuidv4 } from "../Utils";
 
 export interface HeaderProps {
   model: BrainstormModel;
   author: User;
-  members: User[];
 }
 
 export function Header(props: HeaderProps) {
   const colorButtonRef = useRef<any>();
   const [color, setColor] = useState(DefaultColor);
-  // const personas = React.useMemo(() => props.members.map(member => {return { personaName: member.userName}}), [props.members]);
   const { model } = props;
   const [signedInUserIds, setSignedInUserIds ] = useState<string[]>([]);
 

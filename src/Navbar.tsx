@@ -46,9 +46,9 @@ export function Navbar(props: { frsResources: AzureResources, setSignedInUser: (
 
     return (
         <header>
-          <div className="container">
-            <div className="title">Let's Brainstorm</div>
-            <div className="login">
+          <div className="grid-container">
+            <div className="left title">Let's Brainstorm</div>
+            <div className="right login end">
               <Login></Login>
             </div>
           </div>

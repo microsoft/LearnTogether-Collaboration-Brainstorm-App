@@ -13,7 +13,7 @@ import { NoteBody } from "./NoteBody";
 
 export type NoteProps = Readonly<{
   id: string;
-  author: User;
+  user: User;
   setPosition: (position: Position) => void;
   onLike: () => void;
   getLikedUsers: () => User[];

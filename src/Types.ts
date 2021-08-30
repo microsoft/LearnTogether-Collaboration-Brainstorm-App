@@ -1,3 +1,5 @@
+import { AzureMember } from "@fluidframework/azure-client";
+
 export type Position = Readonly<{ x: number; y: number }>;
 
 export type User = { userName: string, userId: string };
@@ -19,3 +21,10 @@ export type ColorId =
   | "Pink"
   | "Purple"
   | "Orange";
+
+export type LikedNote = {
+  text: string, 
+  color: string, 
+  author: AzureMember,
+  numLikesCalculated: number
+};

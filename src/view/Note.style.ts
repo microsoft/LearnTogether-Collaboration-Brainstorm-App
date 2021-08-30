@@ -3,8 +3,8 @@ import { ColorOptions } from "./Color";
 import { ColorId } from "../Types";
 
 export const NOTE_SIZE = {
-  width: 300,
-  height: 100
+  width: 250,
+  height: 75
 }
 
 export const tooltipHostStyle: Partial<ITooltipHostStyles> = {
@@ -44,7 +44,7 @@ export const likesButtonStyle: IButtonStyles = {
 export const likesButtonAuthorStyle: IButtonStyles = {
   root: { backgroundColor: "transparent" }, 
   rootHovered: { backgroundColor: "transparent", fontSize: "14px" },
-  rootPressed: { backgroundColor: "transparent" },  
+  rootPressed: { backgroundColor: "transparent" }
 };
 
 export function getRootStyleForColor(color: ColorId): IStyle {

@@ -31,28 +31,114 @@ header {
   height: 50px;
 }
 
-.container {
+.grid-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 0px;
-  grid-template-areas: "title login";
+  grid-template-areas: "left right";
   align-items: center; 
   height: 100%;
-  color: white;
-  margin-left: 25px;
-  margin-right: 25px;
 }
 
-.title {
-  grid-area: title;
-  font-size: 20px;
+.left {
+  grid-area: left;
 }
 
-.login {
-  grid-area: login;
+.right {
+  grid-area: right;
+}
+
+.end {
   justify-self: end;
+}
+
+.start {
+  justify-self: start;
 }
 
 mgt-login {
   --button-color: white;
+}
+
+.title {
+  margin-left: 25px;
+  font-size: 20px;
+  color: white;
+}
+
+.login {
+  color: white;
+  margin-right: 25px;
+}
+
+.white {
+  color: white;
+}
+
+.mr-15 {
+  margin-right: 15px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.pb-5 {
+  padding-bottom: 5px;
+}
+
+.selected-items {
+  margin: 0 auto;
+  max-width: 960px;
+  background-color: #efefef;
+}
+
+.selected-items h2 {
+  height: 35px;
+  background-color: #6e6e6e;
+}
+
+.selected-items h2 div {
+  margin-left: 10px;
+  color: white;
+}
+
+.heading {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.items-list ul {
+  list-style-type: none;
+  padding: 0; 
+  margin: 5px 0px 0px 10px;
+  padding-bottom: 2px;
+}
+
+.items-list li {
+  margin-bottom: 5px;
+}
+
+.selecteditem {
+  font-size: 18px;
+}
+
+.icon-wrapper {
+  position: relative;
+  text-align: center;
+  height: 30px;
+  margin-right: 8px;
+}
+
+.circle-icon {
+  font-size: 30px;
+}
+
+.circle-icon-overlay {
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  padding-bottom: 2px;
 }

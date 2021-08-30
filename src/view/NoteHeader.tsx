@@ -8,7 +8,7 @@ import {
   mergeStyles,
   TooltipHost,
 } from "@fluentui/react";
-import { useContext, useRef, memo } from "react";
+import { useRef, memo } from "react";
 import { Person } from "@microsoft/mgt-react";
 import { ColorPicker } from "./ColorPicker";
 import {
@@ -21,11 +21,10 @@ import {
 } from "./Note.style";
 import { ReactionListCallout } from "./ReactionListCallout";
 import { NoteProps } from "./Note"
-import UserContext from "../userContext";
 
 const HeaderComponent = (props: NoteProps) => {
   const colorButtonRef = useRef();
-  const { userId } = useContext(UserContext);
+  const { user } = props;
 
   const headerProps = {
     className: mergeStyles(getHeaderStyleForColor(props.color)),
@@ -72,7 +71,7 @@ const HeaderComponent = (props: NoteProps) => {
   const farItems: ICommandBarItemProps[] = [
     {
       key: "likes",
-      onClick: isAuthorNote() ? () => {} : props.onLike,
+      onClick: props.onLike,
       text: props.numLikesCalculated.toString(),
       iconProps: {
         iconName: props.didILikeThisCalculated ? "LikeSolid" : "Like",
@@ -121,7 +120,7 @@ const HeaderComponent = (props: NoteProps) => {
 
   // Don't add links button for author of note
   function isAuthorNote() {
-    return userId && props.author.userId === userId;
+    return user.userId && props.author.userId === user.userId;
   }
 
   const nonResizingGroup = (props: IResizeGroupProps) => (
