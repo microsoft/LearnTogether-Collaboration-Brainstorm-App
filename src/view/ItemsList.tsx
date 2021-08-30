@@ -53,7 +53,7 @@ export function ItemsList(props: ItemsListProps) {
                         })}
                     </ul>
                     }
-                    {notes.length == 0 &&
+                    {notes.length === 0 &&
                         <div className="selecteditem ml-10 pb-5">No notes selected</div>
                     }
                 </div>
