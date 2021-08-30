@@ -6,10 +6,6 @@
   "repository": "microsoft/FluidExamples",
   "license": "MIT",
   "author": "Microsoft and contributors",
-  "sideEffects": false,
-  "main": "dist/index.js",
-  "module": "lib/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
