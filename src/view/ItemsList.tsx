@@ -29,8 +29,8 @@ export function ItemsList(props: ItemsListProps) {
 
                 <div className="selected-items">
                     <h2 className="grid-container">
-                        <div className="left">Selected Items</div>
-                        <div className="right end mr-15">Votes</div>
+                        <div className="left heading">Selected Items</div>
+                        <div className="right end mr-15 heading">Votes</div>
                     </h2>
                     {!!notes.length &&
                     <ul>
@@ -39,7 +39,7 @@ export function ItemsList(props: ItemsListProps) {
                             return (
                                 <li key={i}>
                                     <div className="grid-container">
-                                        <div className="left">{note.text}</div>
+                                        <div className="left selecteditem">{note.text}</div>
                                         <div className="right end mr-15">
                                             <div className="icon-wrapper">
                                                 <CircleFillIcon className="circle-icon" 
@@ -52,6 +52,9 @@ export function ItemsList(props: ItemsListProps) {
                             )
                         })}
                     </ul>
+                    }
+                    {notes.length == 0 &&
+                        <div className="selecteditem ml-10 pb-5">No notes selected</div>
                     }
                 </div>
         </div>
