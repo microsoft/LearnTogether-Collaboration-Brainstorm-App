@@ -1,12 +1,9 @@
 # Lets Brainstorm
 
-```
-This example is using an experimental API surface so please be cautious. We will break it!
-```
+Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been "liked" appear
+in a list and are sorted based upon the number likes. 
 
-Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board.
-
-This application was shown during a [Microsoft Build session](https://aka.ms/OD522).
+Azure Communications Service (ACS) and Microsoft Graph functionality is also integrated in the `m365` branch to add audio/video, display user profiles, and integrate user presence.
 
 ## Running the App Locally with FRS as the Fluid Service
 
@@ -35,8 +32,8 @@ This package is based on the [Create React App](https://reactjs.org/docs/create-
 
 1. Navigate to `http://localhost:3000`
 
-You'll be taken to a url similar to 'http://localhost:3000/**#1621961220840**' the path `##1621961220840` is specifies one brainstorm document.
+You'll be taken to a url similar to 'http://localhost:3000/**#a9c16d13-43fa-413a-859c-514e5bcaba3c**' the path `#a9c16d13-43fa-413a-859c-514e5bcaba3c` specifies one brainstorm document.
 
-2. Create another chrome tab with `http://localhost:3000/**#1621961220840**`
+2. Create another chrome tab with `http://localhost:3000/**#a9c16d13-43fa-413a-859c-514e5bcaba3c**`
 
 Now you can create notes, write text, change colors and more!
