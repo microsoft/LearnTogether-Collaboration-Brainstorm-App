@@ -30,8 +30,8 @@ This package is based on the [Create React App](https://reactjs.org/docs/create-
 
 1. Navigate to `http://localhost:3000`
 
-You'll be taken to a url similar to 'http://localhost:3000/**#1621961220840**' the path `##1621961220840` is specifies one brainstorm document.
+You'll be taken to a url similar to 'http://localhost:3000/**#a9c16d13-43fa-413a-859c-514e5bcaba3c**' the path `#a9c16d13-43fa-413a-859c-514e5bcaba3c` specifies one brainstorm document.
 
-2. Create another chrome tab with `http://localhost:3000/**#1621961220840**`
+2. Create another chrome tab with `http://localhost:3000/**#a9c16d13-43fa-413a-859c-514e5bcaba3c**`
 
 Now you can create notes, write text, change colors and more!
