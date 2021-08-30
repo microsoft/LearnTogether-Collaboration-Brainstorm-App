@@ -1,6 +1,6 @@
 {
   "name": "learn-together-brainstorm",
-  "version": "0.44.0",
+  "version": "0.46.0",
   "description": "A simple brainstorming app built using Create React App plus a Fluid data model",
   "homepage": "https://fluidframework.com",
   "repository": "microsoft/FluidExamples",
