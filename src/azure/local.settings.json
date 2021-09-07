@@ -1,0 +1,9 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "acsfluid_STORAGE": "[STORAGE_CONNECTION_URI]",
+    "ResourceConnectionString": "[CONNECTION_STRING]"
+  }
+}
