@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-const appSettings = require('../../local.settings.json');
-
 export const getResourceConnectionString = (): string => {
-  const resourceConnectionString = process.env['ResourceConnectionString'] || appSettings.ResourceConnectionString;
+  const resourceConnectionString = process.env['ResourceConnectionString'] || require('../../local.settings.json').ResourceConnectionString;
 
   if (!resourceConnectionString) {
     throw new Error('No ACS connection string provided');
