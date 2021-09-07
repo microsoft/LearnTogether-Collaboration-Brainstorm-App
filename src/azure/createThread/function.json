@@ -1,0 +1,37 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "table",
+      "direction": "in",
+      "name": "moderatorEntity",
+      "tableName": "moderator",
+      "partitionKey": "Moderator",
+      "rowKey": "Moderator",
+      "filter": "undefined",
+      "connection": "acsfluid_STORAGE"
+    },
+    {
+      "type": "table",
+      "direction": "out",
+      "name": "moderatorOutTable",
+      "tableName": "moderator",
+      "connection": "acsfluid_STORAGE"
+    }
+  ],
+  "scriptFile": "../dist/createThread/index.js"
+}
