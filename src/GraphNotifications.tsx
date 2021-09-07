@@ -69,7 +69,7 @@ export async function GraphChat(userId: undefined) {
   }
 }
 export async function Notification(message: string) {
-const provider = Providers.globalProvider;
+  const provider = Providers.globalProvider;
   //SignalR Message - Presence Change Notifications
   console.log(message);
   const parsedMessage = JSON.parse(message);
