@@ -17,9 +17,10 @@ import useIsSignedIn from './useIsSignedIn';
 import UserContext from "./userContext";
 import { User } from "./Types";
 import { getFluidContainer } from "./Utils";
+import SignalRConnection from "./SignalRConnection";
 
 Providers.globalProvider = new Msal2Provider({
-    clientId: '26fa7fdf-ae13-4db0-84f8-8249376812dc'
+    clientId: '259fb0fd-a369-4003-a93c-66c8405567f3'
 });
 
 export async function start() {
@@ -50,7 +51,10 @@ export async function start() {
                         <Navbar frsResources={azureResources} setSignedInUser={setSignedInUser} />
                         <main>
                             {isSignedIn &&
-                                <BrainstormView frsResources={azureResources} />
+                                <div>
+                                    <SignalRConnection />
+                                    <BrainstormView frsResources={azureResources} />
+                                </div>
                             }
                             {!isSignedIn &&
                                 <h2>Welcome to Brainstorm! Please sign in to get started.</h2>
