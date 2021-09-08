@@ -31,7 +31,7 @@ export async function GraphChat(userId: undefined) {
             if (parseMembers.members[member].userId === userId) {
               const chatMessage = {
                 body: {
-                  content: 'Join us in this meeting: www.xyz.com'
+                  content: `Come collaborate with us! ${window.location}`
                 }
               };
               await graphClient.api('/chats/' + parseChat.value[chat].id + '/messages')
@@ -68,13 +68,14 @@ export async function GraphChat(userId: undefined) {
     }
   }
 }
+
 export async function Notification(message: string) {
   const provider = Providers.globalProvider;
   //SignalR Message - Presence Change Notifications
-  console.log(message);
+  // console.log(message);
   const parsedMessage = JSON.parse(message);
 
-  console.log(parsedMessage);
+  // console.log(parsedMessage);
   const userId = parsedMessage.id;
   const userAvailability = parsedMessage.availability;
 
@@ -83,7 +84,6 @@ export async function Notification(message: string) {
   console.log("user id:" + userId);
 
   //get logged in user's id
-  console.log('Calling Graph /me due to Notification');
   let graphClient = provider.graph.client;
   let loggedInUser = await graphClient.api('/me').get();
   const strLoggedInUser = JSON.stringify(loggedInUser);

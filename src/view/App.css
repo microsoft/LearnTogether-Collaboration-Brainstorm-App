@@ -159,11 +159,17 @@ mgt-login {
   cursor: pointer;
 }
 
+.note-person mgt-person {
+  text-align: start;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --avatar-size: 30px;
+}
+
 .ToastButton:hover {
   background-color: rgb(41, 183, 2, .5);
 }
 
-mgt-person {
+.Toastify mgt-person {
   text-align: start;
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --avatar-size: 50px;

@@ -61,7 +61,9 @@ const HeaderComponent = (props: NoteProps) => {
             styles={{ root: { alignSelf: "center", display: "block", marginLeft: "5px" } }}
             content={props.author.userName}
           >
-            <Person userId={props.author.userId} />
+            <div className="note-person">
+              <Person userId={props.author.userId} />
+            </div>
           </TooltipHost>
         );
       },
