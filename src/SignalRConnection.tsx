@@ -27,7 +27,6 @@ function SignalRConnection() {
   return (
     <div className="App">
       <ToastContainer position="bottom-right"
-          autoClose={false}
           hideProgressBar={true}
           newestOnTop={true}
           rtl={false}
@@ -36,7 +35,6 @@ function SignalRConnection() {
           pauseOnHover
           transition={Slide}
           icon={false}
-          closeOnClick={false}
           bodyClassName={() => "text-sm font-white font-med block p-3"}
           style={{border:"#29B702", padding:"1px" , margin:"5px"}}
           

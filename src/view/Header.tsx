@@ -16,6 +16,13 @@ export interface HeaderProps {
   author: User;
 }
 
+// Expose signed in userIds to other parts of app (quick and easy way)
+let appSignedInUserIds: string[] = [];
+
+export function getAppSignedInUserIds() {
+  return appSignedInUserIds;
+}
+
 export function Header(props: HeaderProps) {
   const colorButtonRef = useRef<any>();
   const [color, setColor] = useState(DefaultColor);
@@ -27,6 +34,8 @@ export function Header(props: HeaderProps) {
     function signedInUserIdsChanged(changed: any, local: any) {
       if (changed.key === "userIds") {
         setSignedInUserIds(model.SignedInUserIds);
+        // Update array that is used outside of component
+        appSignedInUserIds = model.SignedInUserIds;
       }
     }
 

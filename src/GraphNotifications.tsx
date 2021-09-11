@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Person, ViewType } from '@microsoft/mgt-react';
 import { SendIcon } from '@fluentui/react-icons-mdl2';
+import { getAppSignedInUserIds } from './view/Header';
 
 export async function GraphChat(userId: undefined) {
   const provider = Providers.globalProvider;
@@ -27,8 +28,8 @@ export async function GraphChat(userId: undefined) {
           const parseMembers = JSON.parse(strMembers);
           console.log(`members details: ${strMembers}`);
 
-          for (let member = 0; member < parseMembers.members.length; member++) {
-            if (parseMembers.members[member].userId === userId) {
+          for (let member of parseMembers.members) {
+            if (member.userId === userId) {
               const chatMessage = {
                 body: {
                   content: `Come collaborate with us! ${window.location}`
@@ -79,9 +80,8 @@ export async function Notification(message: string) {
   const userId = parsedMessage.id;
   const userAvailability = parsedMessage.availability;
 
-  console.log(`id: ${userId}`);
+  console.log("userId:\n" + userId);
   console.log(`availability: ${userAvailability}`);
-  console.log("user id:" + userId);
 
   //get logged in user's id
   let graphClient = provider.graph.client;
@@ -91,36 +91,47 @@ export async function Notification(message: string) {
 
   //notification id to prevent duplicate toast notifications
   const customId = userId;
-  if (userAvailability === "Available" && userId !== parseLoggedInUser.id) {
+  const appSignedInUserIds = getAppSignedInUserIds();
+  console.log('Signed in userId\n', parseLoggedInUser.id)
+  console.log('Signed in userIds: ', appSignedInUserIds);
 
-    //notificatin message
+  // Check if user should be invited to collaboration session
+  if (userAvailability === "Available" && userId !== parseLoggedInUser.id && !appSignedInUserIds.includes(userId)) {
     const Msg = () => (
-
       <div className="ToastDiv">
         <Person
           userId={userId}
-          view={ViewType.threelines}
-          showPresence
-          person-presence="Available" />
+          view={ViewType.twolines}
+          showPresence />
         
         <button
           className="ToastButton"
           id="ToastButton"
           onClick={handleMouseEvent}>Invite  <SendIcon></SendIcon>
         </button>
-
       </div>
     )
 
     const handleMouseEvent = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      // Do something
-
       GraphChat(userId);
-
     };
 
-    toast(Msg, { toastId: customId });
-
+    toast(Msg, { toastId: customId, autoClose: false, closeOnClick: true, });
   }
+  // Only show toast if user is already signed into the app and collaborating
+  else if (userId !== parseLoggedInUser.id && appSignedInUserIds.includes(userId)) {
+        const Msg = () => (
+          <div className="ToastDiv">
+            <Person
+              userId={userId}
+              view={ViewType.threelines}
+              showPresence />
+              <br /><br />
+              User status changed to {userAvailability}
+          </div>
+        )
+        toast(Msg, { toastId: customId, autoClose: 5000 });
+  }
+
 }

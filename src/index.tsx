@@ -18,10 +18,13 @@ import UserContext from "./userContext";
 import { User } from "./Types";
 import { getFluidContainer } from "./Utils";
 import SignalRConnection from "./SignalRConnection";
+import { CacheService } from '@microsoft/mgt-react';
 
 Providers.globalProvider = new Msal2Provider({
     clientId: '259fb0fd-a369-4003-a93c-66c8405567f3'
 });
+
+CacheService.config.presence.invalidationPeriod = 5000; // 10 seconds
 
 export async function start() {
     initializeIcons();
