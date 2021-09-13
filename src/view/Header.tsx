@@ -3,13 +3,13 @@ import {
   CommandBar,
   ICommandBarItemProps,
 } from "@fluentui/react";
-import { People } from '@microsoft/mgt-react';
+import { MgtTemplateProps, People, Person } from '@microsoft/mgt-react';
 import { BrainstormModel } from "../BrainstormModel";
 import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
-import { NoteData, User } from "../Types";
+import { NoteData, User, UserAvailability } from "../Types";
 import { NOTE_SIZE } from "./Note.style";
-import { uuidv4 } from "../Utils";
+import { getUserAvailabilityValue, useEventBus, uuidv4 } from "../Utils";
 
 export interface HeaderProps {
   model: BrainstormModel;
@@ -28,6 +28,14 @@ export function Header(props: HeaderProps) {
   const [color, setColor] = useState(DefaultColor);
   const { model } = props;
   const [signedInUserIds, setSignedInUserIds ] = useState<string[]>([]);
+  const [userAvailability, setUserAvailability] = useState<UserAvailability>({ userId: '', availability: '' });
+
+  useEventBus(
+    'userAvailabilityChanged',
+    (data: any) => {
+      setUserAvailability(data.payload)
+    }
+  )
 
   // This runs when via model changes whether initiated by user or from external
   useEffect(() => {
@@ -95,19 +103,36 @@ export function Header(props: HeaderProps) {
     {
       key: "presence",
       onRender: () => {
+
+        const PersonTemplate = ({ dataContext }: MgtTemplateProps) => {
+          const person = dataContext.person;
+          const availability = getUserAvailabilityValue(person.id, userAvailability);
+          const baseProps = { userId: person.id, showPresence: true, userAvailability: dataContext.userAvailability };
+          const personProps = (availability) 
+            ? {...baseProps, personPresence:{ activity: availability, availability: availability } } 
+            : baseProps;
+
+          return (
+            <Person {...personProps} />
+          );
+        };
+
         return (
-          <div>
-              <People userIds={signedInUserIds} showPresence />
+          <div>              
+              <People userIds={signedInUserIds} showPresence templateContext={{userAvailability}}>
+                <PersonTemplate template="person" />
+              </People>
           </div>
         );
       },
     },
   ];
+
   return (
     <CommandBar
       styles={{ root: { paddingLeft: 0 } }}
       items={items}
-      farItems={farItems}
+      farItems={farItems}      
     />
   );
 }

@@ -4,6 +4,8 @@ export type Position = Readonly<{ x: number; y: number }>;
 
 export type User = { userName: string, userId: string };
 
+export type UserAvailability = {userId: string, availability: string};
+
 export type NoteData = Readonly<{
   id: any;
   text?: string;

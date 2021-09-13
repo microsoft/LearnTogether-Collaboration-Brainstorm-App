@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Person, ViewType } from '@microsoft/mgt-react';
 import { SendIcon } from '@fluentui/react-icons-mdl2';
 import { getAppSignedInUserIds } from './view/Header';
+import { dispatch } from './Utils';
 
 export async function GraphChat(userId: undefined) {
   const provider = Providers.globalProvider;
@@ -79,6 +80,9 @@ export async function Notification(message: string) {
   // console.log(parsedMessage);
   const userId = parsedMessage.id;
   const userAvailability = parsedMessage.availability;
+  
+  // Dispatch user availability information to listeners
+  dispatch({ type: 'userAvailabilityChanged', payload: { userId, availability: userAvailability }});
 
   console.log("userId:\n" + userId);
   console.log(`availability: ${userAvailability}`);

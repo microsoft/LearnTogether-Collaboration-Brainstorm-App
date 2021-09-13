@@ -8,7 +8,7 @@ import {
   mergeStyles,
   TooltipHost,
 } from "@fluentui/react";
-import { useRef, memo } from "react";
+import { useRef, memo, useState } from "react";
 import { Person } from "@microsoft/mgt-react";
 import { ColorPicker } from "./ColorPicker";
 import {
@@ -21,13 +21,23 @@ import {
 } from "./Note.style";
 import { ReactionListCallout } from "./ReactionListCallout";
 import { NoteProps } from "./Note"
+import { UserAvailability } from "../Types";
+import { getUserAvailabilityValue, useEventBus } from "../Utils";
 
 const HeaderComponent = (props: NoteProps) => {
   const colorButtonRef = useRef();
   const { user } = props;
+  const [userAvailability, setUserAvailability] = useState<UserAvailability>({ userId: '', availability: '' });
+
+  useEventBus(
+    'userAvailabilityChanged',
+    (data: any) => {
+      setUserAvailability(data.payload)
+    }
+  )
 
   const headerProps = {
-    className: mergeStyles(getHeaderStyleForColor(props.color)),
+    className: mergeStyles(getHeaderStyleForColor(props.color))
   };
 
   const likeBtnTooltipProps: ITooltipProps = {
@@ -56,13 +66,20 @@ const HeaderComponent = (props: NoteProps) => {
     {
       key: "persona",
       onRender: () => {
+        const authorId = props.author.userId;
+        const availability = getUserAvailabilityValue(authorId, userAvailability);
+        const baseProps = { userId: authorId, showPresence: true };
+        const personProps = (availability) 
+          ? {...baseProps, personPresence:{activity: availability, availability: availability} } 
+          : baseProps;
+
         return (
           <TooltipHost
             styles={{ root: { alignSelf: "center", display: "block", marginLeft: "5px" } }}
             content={props.author.userName}
           >
             <div className="note-person">
-              <Person userId={props.author.userId} />
+              <Person {...personProps } />
             </div>
           </TooltipHost>
         );
@@ -152,3 +169,4 @@ export const NoteHeader = memo(HeaderComponent, (prevProps, nextProps) => {
     && prevProps.numLikesCalculated === nextProps.numLikesCalculated
     && prevProps.didILikeThisCalculated === nextProps.didILikeThisCalculated
 })
+
