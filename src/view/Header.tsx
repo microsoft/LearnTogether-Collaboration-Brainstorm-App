@@ -32,10 +32,8 @@ export function Header(props: HeaderProps) {
 
   useEventBus(
     'userAvailabilityChanged',
-    (data: any) => {
-      setUserAvailability(data.payload)
-    }
-  )
+    (data: any) => setUserAvailability(data.payload)
+  );
 
   // This runs when via model changes whether initiated by user or from external
   useEffect(() => {

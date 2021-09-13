@@ -37,8 +37,8 @@ export const dispatch = (event: any) => {
   })
 }
 
-export const useEventBus = (type: string, callback: any, deps: any[] = []) => {
-  useEffect(() => subscribe(type, callback), deps);
+export const useEventBus = (type: string, callback: any) => {
+  useEffect(() => subscribe(type, callback));
   return dispatch;
 }
 

@@ -31,10 +31,8 @@ const HeaderComponent = (props: NoteProps) => {
 
   useEventBus(
     'userAvailabilityChanged',
-    (data: any) => {
-      setUserAvailability(data.payload)
-    }
-  )
+    (data: any) => setUserAvailability(data.payload)
+  );
 
   const headerProps = {
     className: mergeStyles(getHeaderStyleForColor(props.color))
