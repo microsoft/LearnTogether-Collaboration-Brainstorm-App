@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from "@azure/communication-react";
 import { AzureCommunicationTokenCredential, getIdentifierKind } from "@azure/communication-common";
 import { AzureMember } from "@fluidframework/azure-client";
-import { createThread, createTokenAndUser, getEndPointURL, joinThread } from "../Utils/apis";
+import { createThread, createTokenAndUser, ENDPOINT, joinThread } from "../Utils/apis";
 import { getThreadId } from "../Utils/getThreadId";
 
 type ChatPopUpProps = {
@@ -27,11 +27,10 @@ export const ChatPopUp = (props: ChatPopUpProps): JSX.Element | null => {
         url.searchParams.delete('threadId');
         url.searchParams.append('threadId', threadId);
         window.history.pushState({}, document.title, url.toString());
-        const endpointUrl = getEndPointURL();
 
         setAdapter(
           await createAzureCommunicationChatAdapter({
-            endpointUrl,
+            endpointUrl: ENDPOINT,
             userId: getIdentifierKind(tokenAndUser.user),
             displayName,
             credential,
