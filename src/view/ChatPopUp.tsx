@@ -42,10 +42,12 @@ export const ChatPopUp = (props: ChatPopUpProps): JSX.Element | null => {
     }
   }, [adapter, props.author?.userName]);
 
-  return adapter ? <Draggable
-    defaultPosition={{ x: window.innerWidth -500, y: 50 }}
-  // styles={screenSharePopupModalStylesThemed}
-  >
-    <div style={{ height: '600px', width: '400px', border:'gray 1px solid', boxShadow: 'rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0' }}><ChatComposite adapter={adapter} /></div>
-  </Draggable> : null;
+  return adapter ?
+    <div style={{ position: 'absolute', zIndex: 100, width: 0, height: 0 }}>
+      <Draggable
+        defaultPosition={{ x: window.innerWidth - 450, y: window.innerHeight - 650 }}
+      >
+        <div style={{ height: '600px', width: '400px', border: 'gray 1px solid', boxShadow: 'rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0' }}><ChatComposite adapter={adapter} /></div>
+      </Draggable>
+    </div> : null;
 }
