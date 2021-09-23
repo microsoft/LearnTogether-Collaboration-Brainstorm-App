@@ -95,7 +95,7 @@ To setup and run the functions locally, follow the steps below:
 
 1. Replace `AzureSignalRConnectionString`, `AzureEventHubConnectionString` and `AzureWebJobsStorage` with your own connection strings.
 1. Open a terminal window at the *EventHubsFunctions* folder of the project.
-1. Run `func start` from the *EventHubsFunctions* folder.
+1. Run `npm install` and then `func start` from the *EventHubsFunctions* folder.
 
 > **Note:** SignalR binding needs Azure Storage, but you can use local storage emulator when the Function is running locally. Please download and enable [Storage Emulator](https://docs.microsoft.com/azure/storage/common/storage-use-emulator?WT.mc_id=m365-37017-aycabas) to run the Functions locally.
 
