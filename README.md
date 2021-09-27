@@ -3,17 +3,6 @@
 Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been "liked" appear
 in a list and are sorted based upon the number likes.
 
-## Running the App Locally with FRS as the Fluid Service
-
-To run this follow the steps below:
-
-1. Open a terminal window at the root of the project.
-1. Run `npm install` from the root
-1. Run `export REACT_APP_FLUID_CLIENT=frs` in the terminal to create an environment variable (if using PowerShell run `$env:REACT_APP_FLUID_CLIENT='frs'`). This will cause the app to use FRS instead of Tinylicious for the Fluid service.
-)
-1. Run `npm start` to start the client
-1. Navigate to `http://localhost:3000` in a browser tab
-
 ## Running the App Locally with Tinylicious as the Fluid Service
 
 To run this follow the steps below:
@@ -25,6 +14,21 @@ To run this follow the steps below:
 1. Navigate to `http://localhost:3000` in a browser tab
 
 This package is based on the [Create React App](https://reactjs.org/docs/create-a-new-react-app.html), so much of the Create React App documentation applies.
+
+## Running the App Locally with Azure Relay Service as the Fluid Service
+
+To run this follow the steps below:
+
+1. Go to the Azure portal and search for `Azure Fluid Relay`.
+1. Create a new Azure Fluid Relay resource and note the `tenantId`, `token`, and `orderer` and `storage` values.
+1. Rename the `.env-template` file in the root of the project to `.env`.
+1. Replace the values in the `.env` file with the appropriate values from the Azure portal.
+1. Open a terminal window at the root of the project.
+1. Run `npm install` from the root
+1. Run `export REACT_APP_FLUID_CLIENT=frs` in the terminal to create an environment variable (if using PowerShell run `$env:REACT_APP_FLUID_CLIENT='frs'`). This will cause the app to use FRS instead of Tinylicious for the Fluid service.
+)
+1. Run `npm start` to start the client
+1. Navigate to `http://localhost:3000` in a browser tab
 
 ## Using the Brainstorm App
 
