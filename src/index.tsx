@@ -42,7 +42,7 @@ export async function start() {
         return (
             <React.StrictMode>
                 <ThemeProvider theme={themeNameToTheme("default")}>
-                    {azureMember && <ChatPopUp author={azureMember} />}
+                    {azureMember && <ChatPopUp displayName={azureMember.userName} />}
                     <Navbar />
                     <main>
                         <BrainstormView frsResources={azureResources} />

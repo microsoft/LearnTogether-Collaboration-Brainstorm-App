@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Draggable from 'react-draggable';
 import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from "@azure/communication-react";
 import { AzureCommunicationTokenCredential, getIdentifierKind } from "@azure/communication-common";
-import { AzureMember } from "@fluidframework/azure-client";
 import { createThread, createTokenAndUser, ENDPOINT, joinThread } from "../Utils/apis";
-import { getThreadId } from "../Utils/getThreadId";
+import { getThreadIdFromUrl } from "../Utils/getThreadIdFromUrl";
+import { appendThreadIdToUrl } from "../Utils/appendThreadIdToUrl";
 
 type ChatPopUpProps = {
-  author?: AzureMember;
+  displayName?: string;
 }
 
 export const ChatPopUp = (props: ChatPopUpProps): JSX.Element | null => {
@@ -17,30 +17,26 @@ export const ChatPopUp = (props: ChatPopUpProps): JSX.Element | null => {
     if (!adapter) {
       const createAdapter = async (): Promise<void> => {
         const tokenAndUser = await createTokenAndUser();
-        const credential = new AzureCommunicationTokenCredential(tokenAndUser.token);
-        const displayName = props.author?.userName ?? 'Empty Name';
-        const threadId = getThreadId() ?? (await createThread()).threadId;
+        const displayName = props?.displayName ?? 'Empty Name';
+        const threadId = getThreadIdFromUrl() ?? (await createThread()).threadId;
 
         await joinThread(threadId, tokenAndUser.user.communicationUserId, displayName);
 
-        const url = new URL(window.location.href);
-        url.searchParams.delete('threadId');
-        url.searchParams.append('threadId', threadId);
-        window.history.pushState({}, document.title, url.toString());
+        appendThreadIdToUrl(threadId);
 
         setAdapter(
           await createAzureCommunicationChatAdapter({
             endpointUrl: ENDPOINT,
             userId: getIdentifierKind(tokenAndUser.user),
             displayName,
-            credential,
+            credential: new AzureCommunicationTokenCredential(tokenAndUser.token),
             threadId
           })
         );
       };
       createAdapter();
     }
-  }, [adapter, props.author?.userName]);
+  }, [adapter, props?.displayName]);
 
   return adapter ?
     <div style={{ position: 'absolute', zIndex: 100, width: 0, height: 0 }}>

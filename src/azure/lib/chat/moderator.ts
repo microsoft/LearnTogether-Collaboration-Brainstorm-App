@@ -1,22 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatClient, CreateChatThreadOptions, CreateChatThreadRequest } from '@azure/communication-chat';
-import { getEnvUrl } from '../envHelper';
-import { GUID_FOR_INITIAL_TOPIC_NAME } from '../constants';
-import { getToken } from '../identityClient';
+import { getEndPoint, getResourceConnectionString } from '../envHelper';
+import { CommunicationAccessToken, CommunicationIdentityClient } from '@azure/communication-identity';
+
+export const getToken = (user: CommunicationUserIdentifier): Promise<CommunicationAccessToken> => new CommunicationIdentityClient(getResourceConnectionString()).getToken(user, ['chat']);
 
 export const createThread = async (moderatorId: string, topicName?: string): Promise<string> => {
 
   const credential = new AzureCommunicationTokenCredential({
-    tokenRefresher: async () => (await getToken({communicationUserId: moderatorId}, ['chat', 'voip'])).token,
+    tokenRefresher: async () => (await getToken({ communicationUserId: moderatorId })).token,
     refreshProactively: true
   });
-  const chatClient = new ChatClient(getEnvUrl(), credential);
+  const chatClient = new ChatClient(getEndPoint(), credential);
 
   const request: CreateChatThreadRequest = {
-    topic: topicName ?? GUID_FOR_INITIAL_TOPIC_NAME
+    topic: topicName ?? 'Chat'
   };
   const options: CreateChatThreadOptions = {
     participants: [
@@ -40,10 +41,10 @@ export const createThread = async (moderatorId: string, topicName?: string): Pro
 export const joinThread = async (userId: string, displayName: string, moderatorId: string, threadId: string): Promise<void> => {
 
   const credential = new AzureCommunicationTokenCredential({
-    tokenRefresher: async () => (await getToken({communicationUserId: moderatorId}, ['chat', 'voip'])).token,
+    tokenRefresher: async () => (await getToken({ communicationUserId: moderatorId })).token,
     refreshProactively: true
   });
-  const chatClient = new ChatClient(getEnvUrl(), credential);
+  const chatClient = new ChatClient(getEndPoint(), credential);
 
   const chatThreadClient = chatClient.getChatThreadClient(threadId);
 

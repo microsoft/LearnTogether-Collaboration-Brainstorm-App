@@ -1,5 +1,5 @@
 import { CommunicationUserToken } from "@azure/communication-identity";
-const BASE_URL = 'https://acs-fluid.azurewebsites.net/api';
+const BASE_URL = 'https://acs-fluid-api.azurewebsites.net/api';
 export const ENDPOINT = 'https://acs-ui-dev.communication.azure.com';
 
 type CreateThreadResult = {
