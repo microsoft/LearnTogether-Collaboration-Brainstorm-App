@@ -16,9 +16,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         new AzureCommunicationTokenCredential(chatThreadModerator.token));
 
     // Create a chat thread
-    const result = await chatClient.createChatThread(
-        { topic: 'Brainstorming'},
-        { participants: [ { id: chatThreadModerator.user } ] });
+    const result = await chatClient.createChatThread({ topic: 'Brainstorming'});
     
     context.res = {
         body: { threadId: result.chatThread.id }
