@@ -1,17 +1,28 @@
-import { CommunicationUserToken } from "@azure/communication-identity";
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { createThread } from "../lib/chat/moderator";
+import { CommunicationUserToken } from "@azure/communication-identity";
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { ChatClient } from '@azure/communication-chat';
+import { getResourceEndPoint } from '../lib/envHelper';
 
+// Create a chat thread.
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    const moderatorEntity: CommunicationUserToken = JSON.parse(context.bindings.moderatorEntity?.value);
+    // Get the chat thread moderator's user information from the storage 
+    const chatThreadModerator: CommunicationUserToken
+        = JSON.parse(context.bindings.moderatorEntity.value);
 
-    const threadId = await createThread(moderatorEntity.user.communicationUserId, 'Chat');
+    // Initialize a chat client
+    const chatClient = new ChatClient(
+        getResourceEndPoint(),
+        new AzureCommunicationTokenCredential(chatThreadModerator.token));
+
+    // Create a chat thread
+    const result = await chatClient.createChatThread(
+        { topic: 'Brainstorming'},
+        { participants: [ { id: chatThreadModerator.user } ] });
     
     context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: {threadId}
+        body: { threadId: result.chatThread.id }
     };
-
 };
 
 export default httpTrigger;

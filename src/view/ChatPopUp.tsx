@@ -1,36 +1,42 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Draggable from 'react-draggable';
-import { ChatAdapter, ChatComposite, createAzureCommunicationChatAdapter } from "@azure/communication-react";
+import { ChatComposite, ChatAdapter } from "@azure/communication-react";
+import { createAzureCommunicationChatAdapter } from "@azure/communication-react";
 import { AzureCommunicationTokenCredential, getIdentifierKind } from "@azure/communication-common";
-import { createThread, createTokenAndUser, ENDPOINT, joinThread } from "../Utils/apis";
-import { getThreadIdFromUrl } from "../Utils/getThreadIdFromUrl";
-import { appendThreadIdToUrl } from "../Utils/appendThreadIdToUrl";
+import { createChatThread, createUserAndToken, ENDPOINT, joinChatThread } from "../Utils/apis";
+import { getThreadIdFromUrl, appendThreadIdToUrl } from "../Utils/UrlHelper";
 
 type ChatPopUpProps = {
   displayName?: string;
 }
 
 export const ChatPopUp = (props: ChatPopUpProps): JSX.Element | null => {
-
   const [adapter, setAdapter] = useState<ChatAdapter>();
+  
   useEffect(() => {
     if (!adapter) {
       const createAdapter = async (): Promise<void> => {
-        const tokenAndUser = await createTokenAndUser();
-        const displayName = props?.displayName ?? 'Empty Name';
-        const threadId = getThreadIdFromUrl() ?? (await createThread()).threadId;
+        // Get the chat thread or Create a new one if it is the first time.
+        var chatThreadId = getThreadIdFromUrl();
+        if (!chatThreadId) {
+          chatThreadId = (await createChatThread()).threadId;
+          appendThreadIdToUrl(chatThreadId);
+        }
 
-        await joinThread(threadId, tokenAndUser.user.communicationUserId, displayName);
+        // Create a communication user and get a token for it.
+        const {user, token} = await createUserAndToken();
 
-        appendThreadIdToUrl(threadId);
+        // Join the chat thread of this document
+        const displayName = props.displayName!;
+        await joinChatThread(user.communicationUserId, displayName, chatThreadId);
 
         setAdapter(
           await createAzureCommunicationChatAdapter({
             endpointUrl: ENDPOINT,
-            userId: getIdentifierKind(tokenAndUser.user),
+            userId: getIdentifierKind(user),
             displayName,
-            credential: new AzureCommunicationTokenCredential(tokenAndUser.token),
-            threadId
+            credential: new AzureCommunicationTokenCredential(token),
+            threadId: chatThreadId
           })
         );
       };
@@ -40,10 +46,10 @@ export const ChatPopUp = (props: ChatPopUpProps): JSX.Element | null => {
 
   return adapter ?
     <div style={{ position: 'absolute', zIndex: 100, width: 0, height: 0 }}>
-      <Draggable
-        defaultPosition={{ x: window.innerWidth - 450, y: window.innerHeight - 650 }}
-      >
-        <div style={{ height: '600px', width: '400px', border: 'gray 1px solid', boxShadow: 'rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0' }}><ChatComposite adapter={adapter} /></div>
+      <Draggable defaultPosition={{ x: window.innerWidth - 450, y: window.innerHeight - 650 }}>
+        <div style={{ height: '600px', width: '400px', border: 'gray 1px solid', boxShadow: 'rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0' }}>
+          <ChatComposite adapter={adapter} />
+        </div>
       </Draggable>
     </div> : null;
 }
