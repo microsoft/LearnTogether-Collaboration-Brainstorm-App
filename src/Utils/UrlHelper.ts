@@ -7,3 +7,10 @@ export const appendThreadIdToUrl = (threadId: string): void => {
   url.searchParams.append('threadId', threadId);
   window.history.pushState({}, document.title, url.toString());
 };
+
+export const getThreadIdFromUrl = (): string | null => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const threadId = urlParams.get('threadId');
+
+  return threadId;
+};

@@ -1,5 +1,5 @@
-import { CommunicationUserToken } from "@azure/communication-identity";
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { CommunicationUserToken } from "@azure/communication-identity";
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient } from '@azure/communication-chat';
 import { getResourceEndPoint } from '../lib/envHelper';
