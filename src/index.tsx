@@ -29,20 +29,20 @@ export async function start() {
     }
 
     function Main(props: any) {
-        const [azureMember, setAzureMember] = useState<AzureMember | undefined>(undefined);
+        const [fluidUser, setFluidUser] = useState<AzureMember | undefined>(undefined);
 
         useEffect(() => {
             if (!azureResources.containerServices.audience.getMyself()) {
-                azureResources.containerServices.audience.once("membersChanged", () => { setAzureMember(azureResources.containerServices.audience.getMyself()) });
+                azureResources.containerServices.audience.once("membersChanged", () => { setFluidUser(azureResources.containerServices.audience.getMyself()) });
             } else {
-                setAzureMember(azureResources.containerServices.audience.getMyself());
+                setFluidUser(azureResources.containerServices.audience.getMyself());
             }
         }, []);
 
         return (
             <React.StrictMode>
                 <ThemeProvider theme={themeNameToTheme("default")}>
-                    {azureMember && <ChatPopUp author={azureMember} />}
+                    {fluidUser && <ChatPopUp displayName={fluidUser.userName} />}
                     <Navbar />
                     <main>
                         <BrainstormView frsResources={azureResources} />

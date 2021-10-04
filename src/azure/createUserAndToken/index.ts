@@ -1,11 +1,17 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { createUserAndToken } from "../lib/identityClient";
+import { CommunicationIdentityClient } from "@azure/communication-identity";
+import { getResourceConnectionString } from "../lib/envHelper";
 
+// Create a user on demand and issue an Azure Communication Services token for chatting.
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    const userInfo = await createUserAndToken(['chat']);
+    // Initialize a communication identity client
+    const identityClient = new CommunicationIdentityClient(getResourceConnectionString());
+
+    // Create a user and token
+    const { user, token, expiresOn } = await identityClient.createUserAndToken(['chat']);
 
     context.res = {
-        body: { ...userInfo }
+        body: { user, token, expiresOn }
     };
 };
 
