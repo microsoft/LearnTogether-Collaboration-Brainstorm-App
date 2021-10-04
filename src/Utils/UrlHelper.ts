@@ -10,7 +10,5 @@ export const appendThreadIdToUrl = (threadId: string): void => {
 
 export const getThreadIdFromUrl = (): string | null => {
   const urlParams = new URLSearchParams(window.location.search);
-  const threadId = urlParams.get('threadId');
-
-  return threadId;
+  return urlParams.get('threadId');
 };
