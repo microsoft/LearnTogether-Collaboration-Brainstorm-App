@@ -8,14 +8,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const identityClient = new CommunicationIdentityClient(getResourceConnectionString());
 
     // Create a user and token
-    const result = await identityClient.createUserAndToken(['chat']);
+    const { user, token, expiresOn } = await identityClient.createUserAndToken(['chat']);
 
     context.res = {
-        body: {
-            user: result.user,
-            token: result.token,
-            expiresOn: result.expiresOn
-        }
+        body: { user, token, expiresOn }
     };
 };
 
