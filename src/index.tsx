@@ -16,11 +16,11 @@ import { getFluidContainer } from "./Utils";
 export async function start() {
     initializeIcons();
 
-    let {azureResources} = await getFluidContainer();
+    let {container, services} = await getFluidContainer();
 
-    if (!azureResources.fluidContainer.connected) {
+    if (!container.connected) {
         await new Promise<void>((resolve) => {
-            azureResources.fluidContainer.once("connected", () => {
+            container.once("connected", () => {
                 resolve();
             });
         });
@@ -32,7 +32,7 @@ export async function start() {
                 <ThemeProvider theme={themeNameToTheme("default")}>
                     <Navbar />
                     <main>
-                        <BrainstormView frsResources={azureResources} />
+                        <BrainstormView container={container} services={services} />
                     </main>
                 </ThemeProvider>
             </React.StrictMode>
