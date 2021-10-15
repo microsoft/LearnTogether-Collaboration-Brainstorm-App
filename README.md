@@ -2,7 +2,7 @@
 
 Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been "liked" appear
 in a list and are sorted based upon the number likes.
-In addition, we've added Azure Communication Services for interactive chat on the board.
+In addition, we're adding Azure Communication Services for interactive chat on the board.
 
 ## Set up Communication Services
 
@@ -18,7 +18,7 @@ We are using a minimal serverless backend for managing chat users and threads.
 1. Install Azure Function Core Tools via `npm i -g azure-functions-core-tools`
 1. If using VS Code, install the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) for easy debugging and deployment.
 1. Navigate to `src/azure` and run `npm install`
-1. Run `npm start` to run functions locally or deploy them with the Azure Functions extension.
+1. Run `npm run start` to run functions locally or deploy them with the Azure Functions extension.
 1. In `src/Utils/api.ts` set `BASE_URL` to your functions url. This is the public url of your deployed functions app, or when running locally you can find it in your console logs, e.g. `http://localhost:7071/api`.
 
 
