@@ -1,13 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { AzureResources } from '@fluidframework/azure-client';
+import { IFluidContainer } from '@fluidframework/fluid-static';
 import { Providers } from '@microsoft/mgt-element';
 import { Login } from '@microsoft/mgt-react';
 import { BrainstormModel, createBrainstormModel } from "./BrainstormModel";
 import { User } from './Types';
 
-export function Navbar(props: { frsResources: AzureResources, setSignedInUser: (user: User) => void}) {
-    const [model] = useState<BrainstormModel>(
-      createBrainstormModel(props.frsResources.fluidContainer));
+export function Navbar(props: { container: IFluidContainer, setSignedInUser: (user: User) => void}) {
+    const [model] = useState<BrainstormModel>(createBrainstormModel(props.container));
     const userId = useRef<string>("");
 
     useEffect(() => {

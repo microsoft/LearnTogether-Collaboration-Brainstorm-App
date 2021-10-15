@@ -3,7 +3,7 @@
 Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been "liked" appear
 in a list and are sorted based upon the number likes. 
 
-Azure Communications Service (ACS) and Microsoft Graph functionality is also integrated in the `m365` branch to add audio/video, display user profiles, and integrate user presence.
+Microsoft Graph functionality is also integrated in the `m365` branch to display user profiles and integrate user presence.
 
 ## Integrating real-time presence change notifications 
 
@@ -100,28 +100,33 @@ To setup and run the functions locally, follow the steps below:
 > **Note:** SignalR binding needs Azure Storage, but you can use local storage emulator when the Function is running locally. Please download and enable [Storage Emulator](https://docs.microsoft.com/azure/storage/common/storage-use-emulator?WT.mc_id=m365-37017-aycabas) to run the Functions locally.
 
 
-## Running the App Locally with FRS as the Fluid Service
+## Running the App Locally 
+
+Follow the steps below to run this in local mode (Azure local service):
+
+1. Run `npm install` from the brainstorm folder root
+1. Run `npx @fluidframework/azure-local-service@latest` to start the Azure local service for testing and development
+1. Run `npm run start` to start the client
+1. Navigate to `http://localhost:3000` in a browser tab
+
+📝 NOTE
+
+Azure local service is a local, self-contained test service. Running `npx @fluidframework/azure-local-service@latest` from your terminal window will launch the Azure local server. The server will need to be started first in order to provide the ordering and storage requirement of the Fluid runtime.
+
+## Running the App Locally with Azure Relay Service as the Fluid Service
 
 To run this follow the steps below:
 
+1. Go to the Azure portal and search for `Fluid Relay`.
+1. Create a new Azure Fluid Relay resource and note the `Tenant Id`, `Primary key`, and `Orderer Endpoint` and `Storage Endpoint` values.
+1. Rename the `.env-template` file in the root of the project to `.env`.
+1. Replace the values in the `.env` file with the appropriate values from the Azure portal.
 1. Open a terminal window at the root of the project.
 1. Run `npm install` from the root
-1. Run `export REACT_APP_FLUID_CLIENT=frs` in the terminal to create an environment variable (if using PowerShell run `$env:REACT_APP_FLUID_CLIENT='frs'`). This will cause the app to use FRS instead of Tinylicious for the Fluid service.
+1. Run `export REACT_APP_FLUID_CLIENT=useAzure` in the terminal to create an environment variable (if using PowerShell run `$env:REACT_APP_FLUID_CLIENT='useAzure'`). This will cause the app to use Fluid Relay service instead of `azure-local-service` for the Fluid relay service.
 )
 1. Run `npm start` to start the client
 1. Navigate to `http://localhost:3000` in a browser tab
-
-## Running the App Locally with Tinylicious as the Fluid Service
-
-To run this follow the steps below:
-
-1. Open a terminal window at the root of the project.
-1. Run `npm install` from the root
-1. Run `npm start` to start the client
-1. Run `npx tinylicious` to start the "Tinylicious" test service locally (this is used for local development)
-1. Navigate to `http://localhost:3000` in a browser tab
-
-This package is based on the [Create React App](https://reactjs.org/docs/create-a-new-react-app.html), so much of the Create React App documentation applies.
 
 ## Using the Brainstorm App
 

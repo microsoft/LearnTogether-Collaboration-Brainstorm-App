@@ -1,4 +1,5 @@
-import { AzureClient, AzureResources } from "@fluidframework/azure-client";
+import { AzureClient, AzureContainerServices } from "@fluidframework/azure-client";
+import { IFluidContainer } from "fluid-framework";
 import { connectionConfig, containerSchema } from "./Config";
 import { useEffect } from 'react'
 import { UserAvailability } from "./Types";
@@ -49,34 +50,49 @@ export const getUserAvailabilityValue = (authorId: string, userAvailability: Use
     return null;
 }
 
-export async function getFluidContainer():
-    Promise<{ containerId: string, azureResources: AzureResources }> {
+const getContainerId = (): { containerId: string; isNew: boolean } => {
     let containerId = '';
-    // Check if there's a previous containerId (user may have simply logged out)
+    let isNew = false;
+  
+    // Check if there's a previous containerId 
+    // (storing this for demo purposes - user may have simply logged out)
+    // Used later in M365 branch when auth is introduced
     const prevContainerId = sessionStorage.getItem("containerId");
     if (location.hash.length === 0) {
         if (prevContainerId) {
             location.hash = prevContainerId;
             containerId = prevContainerId;
         }
+        else {
+          isNew = true;
+        }
     }
     else {
-        containerId = location.hash.substring(1);
+        containerId = location.hash.substring(1);    
     }
+  
+    return { containerId, isNew };
+}
 
-    const client = new AzureClient(connectionConfig);
-    let azureResources: AzureResources;
-    if (containerId) {
-        azureResources = await client.getContainer(containerId, containerSchema);
-    }
-    else {
-        azureResources = await client.createContainer(containerSchema);
-        // Temporary until attach() is available (per Fluid engineering)
-        containerId = azureResources.fluidContainer.id;
-        location.hash = containerId;
-    }
-    sessionStorage.setItem("containerId", containerId);
-    return { containerId, azureResources };
+export async function getFluidContainer() : 
+ Promise<{ container: IFluidContainer, services: AzureContainerServices}> {
+
+  let { containerId, isNew } = getContainerId();
+
+  const client = new AzureClient(connectionConfig);
+  let container: IFluidContainer;
+  let services: AzureContainerServices;
+  
+  if (isNew) {
+    ({ container, services } = await client.createContainer(containerSchema));
+    containerId = await container.attach();
+    location.hash = containerId;
+  }
+  else {
+    ({ container, services } = await client.getContainer(containerId, containerSchema));
+  }
+  sessionStorage.setItem("containerId", containerId);
+  return { container, services }; 
 }
 
 export function generateUser() {

@@ -1,4 +1,4 @@
-import { FluidContainer, ISharedMap, SharedMap } from "fluid-framework";
+import { IFluidContainer, ISharedMap, SharedMap } from "fluid-framework";
 import { LikedNote, NoteData, Position, User } from "./Types";
 
 const c_NoteIdPrefix = "noteId_";
@@ -26,7 +26,7 @@ export type BrainstormModel = Readonly<{
   SignedInUserIds: string[];
 }>;
 
-export function createBrainstormModel(fluid: FluidContainer): BrainstormModel {
+export function createBrainstormModel(fluid: IFluidContainer): BrainstormModel {
   const sharedMap: ISharedMap = fluid.initialObjects.map as SharedMap;
 
   const IsCompleteNote = (noteId: string) => {

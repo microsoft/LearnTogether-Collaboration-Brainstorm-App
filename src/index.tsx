@@ -29,11 +29,11 @@ CacheService.config.presence.invalidationPeriod = 5000; // 10 seconds
 export async function start() {
     initializeIcons();
 
-    let {azureResources} = await getFluidContainer();
+    let { container } = await getFluidContainer();
 
-    if (!azureResources.fluidContainer.connected) {
+    if (!container.connected) {
         await new Promise<void>((resolve) => {
-            azureResources.fluidContainer.once("connected", () => {
+            container.once("connected", () => {
                 resolve();
             });
         });
@@ -51,12 +51,12 @@ export async function start() {
             <React.StrictMode>
                 <ThemeProvider theme={themeNameToTheme("default")}>
                     <UserContext.Provider value={user}>
-                        <Navbar frsResources={azureResources} setSignedInUser={setSignedInUser} />
+                        <Navbar container={container} setSignedInUser={setSignedInUser} />
                         <main>
                             {isSignedIn &&
                                 <div>
                                     <SignalRConnection />
-                                    <BrainstormView frsResources={azureResources} />
+                                    <BrainstormView container={container} />
                                 </div>
                             }
                             {!isSignedIn &&

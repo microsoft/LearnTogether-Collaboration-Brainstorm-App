@@ -1,5 +1,5 @@
 import { mergeStyles, Spinner } from "@fluentui/react";
-import { AzureResources } from "@fluidframework/azure-client";
+import { IFluidContainer } from "fluid-framework";
 import { useState, useContext } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -9,9 +9,8 @@ import { Header } from "./Header";
 import { ItemsList } from "./ItemsList";
 import { NoteSpace } from "./NoteSpace";
 
-export const BrainstormView = (props: { frsResources: AzureResources }) => {
-  const { frsResources: { fluidContainer } } = props;
-  const [model] = useState<BrainstormModel>(createBrainstormModel(fluidContainer));
+export const BrainstormView = (props: { container: IFluidContainer }) => {
+  const [model] = useState<BrainstormModel>(createBrainstormModel(props.container));
   const user = useContext(UserContext);
   const wrapperClass = mergeStyles({
     height: "100%",
