@@ -21,6 +21,7 @@ export const BrainstormView = (props: { container: IFluidContainer, services: Az
       audience.getMembers().values()
     )
   ), [setMembers, audience]);
+  
   // Setup a listener to update our users when new clients join the session
   useEffect(() => {
     container.on("connected", setMembersCallback);
