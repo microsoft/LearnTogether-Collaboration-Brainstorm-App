@@ -23,7 +23,7 @@
       "partitionKey": "Moderator",
       "rowKey": "Moderator",
       "filter": "undefined",
-      "connection": "acsfluid_STORAGE"
+      "connection": "AzureWebJobsStorage"
     }
   ],
   "scriptFile": "../dist/joinThread/index.js"

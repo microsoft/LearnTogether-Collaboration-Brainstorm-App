@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import Draggable from 'react-draggable';
+import Draggable from "react-draggable";
 import { ChatComposite, ChatAdapter } from "@azure/communication-react";
 import { createAzureCommunicationChatAdapter } from "@azure/communication-react";
 import { AzureCommunicationTokenCredential, getIdentifierKind } from "@azure/communication-common";
-import { createChatThread, createUserAndToken, ENDPOINT, joinChatThread } from "../Utils/apis";
+import { createChatThread, createUserAndToken, joinChatThread } from "../Utils/apis";
 import { getThreadIdFromUrl, appendThreadIdToUrl } from "../Utils/UrlHelper";
+
+const ENDPOINT = "[COMMUNICATION_SERVICES_ENDPOINT]";
 
 type ChatPopUpProps = {
   displayName?: string;

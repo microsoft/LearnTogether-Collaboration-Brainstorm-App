@@ -1,6 +1,6 @@
 import { CommunicationUserToken } from "@azure/communication-identity";
-const BASE_URL = 'https://acs-fluid-api.azurewebsites.net/api';
-export const ENDPOINT = 'https://acs-ui-dev.communication.azure.com';
+
+const BASE_URL = "[FUNCTIONS_URL]";
 
 type CreateThreadResult = {
   threadId: string;
@@ -20,8 +20,8 @@ export const createChatThread = async (): Promise<CreateThreadResult> => {
 
 export const joinChatThread = async (userId: string, displayName: string, threadId: string): Promise<boolean> => {
   const url = new URL(`${BASE_URL}/joinThread`);
-  url.searchParams.append('threadId', threadId);
-  url.searchParams.append('userId', userId);
-  url.searchParams.append('displayName', displayName);
+  url.searchParams.append("threadId", threadId);
+  url.searchParams.append("userId", userId);
+  url.searchParams.append("displayName", displayName);
   return (await fetch(url.toString())).status === 200;
 }
