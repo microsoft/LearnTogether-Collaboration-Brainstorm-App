@@ -23,14 +23,14 @@
       "partitionKey": "Moderator",
       "rowKey": "Moderator",
       "filter": "undefined",
-      "connection": "acsfluid_STORAGE"
+      "connection": "AzureWebJobsStorage"
     },
     {
       "type": "table",
       "direction": "out",
       "name": "moderatorOutTable",
       "tableName": "moderator",
-      "connection": "acsfluid_STORAGE"
+      "connection": "AzureWebJobsStorage"
     }
   ],
   "scriptFile": "../dist/createThread/index.js"
