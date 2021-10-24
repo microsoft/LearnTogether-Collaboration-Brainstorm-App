@@ -18,11 +18,11 @@ import { ChatPopUp } from "./view/ChatPopUp";
 export async function start() {
     initializeIcons();
 
-    let { azureResources } = await getFluidContainer();
+    let {container, services} = await getFluidContainer();
 
-    if (!azureResources.fluidContainer.connected) {
+    if (!container.connected) {
         await new Promise<void>((resolve) => {
-            azureResources.fluidContainer.once("connected", () => {
+            container.once("connected", () => {
                 resolve();
             });
         });
@@ -32,10 +32,10 @@ export async function start() {
         const [fluidUser, setFluidUser] = useState<AzureMember | undefined>(undefined);
 
         useEffect(() => {
-            if (!azureResources.containerServices.audience.getMyself()) {
-                azureResources.containerServices.audience.once("membersChanged", () => { setFluidUser(azureResources.containerServices.audience.getMyself()) });
+            if (!services.audience.getMyself()) {
+                services.audience.once("membersChanged", () => { setFluidUser(services.audience.getMyself()) });
             } else {
-                setFluidUser(azureResources.containerServices.audience.getMyself());
+                setFluidUser(services.audience.getMyself());
             }
         }, []);
 
@@ -45,7 +45,7 @@ export async function start() {
                     {fluidUser && <ChatPopUp displayName={fluidUser.userName} />}
                     <Navbar />
                     <main>
-                        <BrainstormView frsResources={azureResources} />
+                        <BrainstormView container={container} services={services} />
                     </main>
                 </ThemeProvider>
             </React.StrictMode>

@@ -1,5 +1,6 @@
 import { mergeStyles, Spinner } from "@fluentui/react";
-import { AzureResources } from "@fluidframework/azure-client";
+import { AzureContainerServices } from "@fluidframework/azure-client";
+import { IFluidContainer } from "fluid-framework";
 import { useState, useCallback, useEffect } from "react";
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -8,11 +9,11 @@ import { Header } from "./Header";
 import { ItemsList } from "./ItemsList";
 import { NoteSpace } from "./NoteSpace";
 
-export const BrainstormView = (props: { frsResources: AzureResources }) => {
-  const { frsResources: { fluidContainer, containerServices } } = props;
-  const [model] = useState<BrainstormModel>(createBrainstormModel(fluidContainer));
+export const BrainstormView = (props: { container: IFluidContainer, services: AzureContainerServices }) => {
+  const { container, services } = props;
+  const [model] = useState<BrainstormModel>(createBrainstormModel(container));
 
-  const audience = containerServices.audience;
+  const audience = services.audience;
   const [members, setMembers] = useState(Array.from(audience.getMembers().values()));
   const authorInfo = audience.getMyself();
   const setMembersCallback = useCallback(() => setMembers(
@@ -22,13 +23,13 @@ export const BrainstormView = (props: { frsResources: AzureResources }) => {
   ), [setMembers, audience]);
   // Setup a listener to update our users when new clients join the session
   useEffect(() => {
-    fluidContainer.on("connected", setMembersCallback);
+    container.on("connected", setMembersCallback);
     audience.on("membersChanged", setMembersCallback);
     return () => {
-      fluidContainer.off("connected", () => setMembersCallback);
+      container.off("connected", () => setMembersCallback);
       audience.off("membersChanged", () => setMembersCallback);
     };
-  }, [fluidContainer, audience, setMembersCallback]);
+  }, [container, audience, setMembersCallback]);
 
   const wrapperClass = mergeStyles({
     height: "100%",

@@ -1,8 +1,9 @@
-import { AzureConnectionConfig, InsecureTokenProvider } from "@fluidframework/azure-client";
+import { AzureClientProps, LOCAL_MODE_TENANT_ID } from "@fluidframework/azure-client";
+import { InsecureTokenProvider } from "@fluidframework/test-runtime-utils";
 import { SharedMap } from "fluid-framework";
 import { generateUser } from './Utils';
 
-export const useAzureFrs = process.env.REACT_APP_FLUID_CLIENT === "frs";
+export const useAzure = process.env.REACT_APP_FLUID_CLIENT === "useAzure";
 export const user = generateUser();
 export const containerSchema = {
     name: "brainstorm",
@@ -11,18 +12,18 @@ export const containerSchema = {
     },
 }
 
-export const connectionConfig: AzureConnectionConfig = useAzureFrs ? {
-    tenantId: 'm365cda',
-    tokenProvider: new InsecureTokenProvider('c979c09e55407ceb62840c7ddfcfb0c1', user),
-    orderer: 'https://alfred.eus-1.canary.frs.azure.com',
-    storage: 'https://historian.eus-1.canary.frs.azure.com',
-} : {
-        tenantId: "local",
+export const connectionConfig: AzureClientProps = useAzure ? { 
+    connection: {
+        tenantId: process.env.REACT_APP_TENANT_ID as string,
+        tokenProvider: new InsecureTokenProvider(process.env.REACT_APP_PRIMARY_KEY as string, user),
+        orderer: process.env.REACT_APP_ORDERER_ENDPOINT as string,
+        storage: process.env.REACT_APP_STORAGE_ENDPOINT as string
+    }
+} : { 
+    connection: {
+        tenantId: LOCAL_MODE_TENANT_ID,
         tokenProvider: new InsecureTokenProvider("fooBar", user),
         orderer: "http://localhost:7070",
         storage: "http://localhost:7070",
-    };
-
-
-
-
+    }
+};
