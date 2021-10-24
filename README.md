@@ -6,7 +6,7 @@ in a list and are sorted based upon the number likes.
 There are 3 branches available in this repo:
 
 1. `main` - Fluid Framework application demo
-1. `acs` - Fluid Framework and Azure Communication Services demo
+1. `acs` - Fluid Framework and Azure Communication Services chat demo
 1. `m365` - Fluid Framework, Microsoft Graph Toolkit, Microsoft 365, Event Hub, Azure Functions, SignalR demo
 
 ## Running the App Locally 
