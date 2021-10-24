@@ -3,6 +3,12 @@
 Brainstorm is an example of using the Fluid Framework to build a collaborative line of business application. In this example each user can create their own sticky notes that is managed on a board. Ideas that have been "liked" appear
 in a list and are sorted based upon the number likes.
 
+There are 3 branches available in this repo:
+
+1. `main` - Fluid Framework application demo
+1. `acs` - Fluid Framework and Azure Communication Services demo
+1. `m365` - Fluid Framework, Microsoft Graph Toolkit, Microsoft 365, Event Hub, Azure Functions, SignalR demo
+
 ## Running the App Locally 
 
 Follow the steps below to run this in local mode (Azure local service):
